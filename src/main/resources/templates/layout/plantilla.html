@@ -22,6 +22,9 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <ul class="navbar-nav" sec:authorize="hasRole('ROLE_VENDEDOR')">
                         <li class="nav-item px-2"><a class="nav-link" th:href="@{/usuario/listado}">Usuario</a></li>
+                        <li class="nav-item px-2"><a class="nav-link" th:href="@{/proveedores/listado}">provedor</a></li>
+                        <li class="nav-item px-2"><a class="nav-link" th:href="@{/productos/listado}">productos</a></li>
+                        <li class="nav-item px-2"><a class="nav-link" th:href="@{/empleados/listado}">empleados</a></li>
                     </ul>
                 </div>
             </div>

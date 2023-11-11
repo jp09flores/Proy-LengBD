@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Inicio</title>
+    </head>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}"></header>
+
+
+       <section th:fragment="empleados">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form th:action="@{/empleados/guardar}" method="post"
+                          class="was-validated"                          
+                          enctype="multipart/form-data">
+                        <input type="hidden" id="IdEmpleado" name="IdEmpleado" th:value="${idUltimoEmpleado}"/>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Agregar</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label>Nombre del cliente</label>
+                                                <input type="text" class="form-control"  id="nombre" 
+                                                       name="nombre"  required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                 <label>Numero de telefono</label>
+                                                <input type="text" class="form-control"id="numTelefono" name="numTelefono" 
+                                                       required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                 <label>Direccion</label>
+                                                <input type="text" class="form-control"id="direccion" name="direccion" 
+                                                       required="true"/>
+                                            </div>
+                                            <div style="display:flex;justify-content: center">
+                                                <button type="submit" class=" btn btn-success">
+                                                <i class="fas fa-check"></i> guardar
+                                                </button>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    </body>
+</html>
