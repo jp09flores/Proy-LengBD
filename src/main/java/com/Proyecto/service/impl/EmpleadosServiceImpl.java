@@ -16,7 +16,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-        
+
+@Service
 public class EmpleadosServiceImpl implements EmpleadosService {
     
     @Autowired
@@ -51,7 +52,7 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
     String apellido = (String) query.getOutputParameterValue("p_apellido");
     String direccion = (String) query.getOutputParameterValue("p_direccion");
     String numTelefono = (String) query.getOutputParameterValue("p_num_telefono");
-    String correo = (String) query.getOutputParameterValue("p_correo");
+    String correoElect = (String) query.getOutputParameterValue("p_correo");
     String salario = (String) query.getOutputParameterValue("p_salario");
     String FechaIng = (String) query.getOutputParameterValue("p_fecha_ingreso");
     String FechaNac = (String) query.getOutputParameterValue("p_fecha_nacimiento");
@@ -61,7 +62,7 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
     empleados.setApellido(apellido);
     empleados.setDireccion(direccion);
     empleados.setNumTelefono(numTelefono);
-    empleados.setCorreo(correo);
+    empleados.setCorreoElect(correoElect);
     empleados.setSalario(salario);
     empleados.setFechaIngre(FechaIng);
     empleados.setFechaNac(FechaNac);
@@ -84,7 +85,7 @@ public void eliminarEmpleado(Long idEmpleado) {
             String apellido,
             String direccion,
             String numTelefono,
-            String correo,
+            String correoElect,
             String salario,
             String FechaIngre,
             String FechaNac) {
@@ -103,7 +104,7 @@ public void eliminarEmpleado(Long idEmpleado) {
             .setParameter("p_apellido", apellido)
             .setParameter("p_direccion", direccion)
             .setParameter("p_num_telefono", numTelefono)
-            .setParameter("p_correo", correo)
+            .setParameter("p_correo", correoElect)
             .setParameter("p_salario", salario)
             .setParameter("p_fecha_ingreso", FechaIngre)
             .setParameter("p_fecha_nacimiento", FechaNac);
@@ -117,7 +118,7 @@ public void eliminarEmpleado(Long idEmpleado) {
             String apellido,
             String direccion,
             String numTelefono,
-            String correo,
+            String correoElect,
             String salario,
             String FechaIngre,
             String FechaNac) {
@@ -136,7 +137,7 @@ public void eliminarEmpleado(Long idEmpleado) {
             .setParameter("p_apellido", apellido)
             .setParameter("p_direccion", direccion)
             .setParameter("p_num_telefono", numTelefono)
-            .setParameter("p_correo", correo)
+            .setParameter("p_correo", correoElect)
             .setParameter("p_salario", salario)
             .setParameter("p_fecha_ingreso", FechaIngre)
             .setParameter("p_fecha_nacimiento", FechaNac);

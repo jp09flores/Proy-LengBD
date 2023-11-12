@@ -43,8 +43,8 @@ public class EmpleadosController {
         return "empleados/modificar";
     }
     @PostMapping("/actualizar")
-    public String actualizarEmpleado(@RequestParam Long IdEmpleado, @RequestParam String nombre,@RequestParam String apellido,@RequestParam String direccion, @RequestParam String numTelefono,@RequestParam String correo,@RequestParam String salario,@RequestParam String FechaIngre,@RequestParam String FechaNac) {
-        empleadosService.actualizarEmpleado(IdEmpleado, nombre,apellido,direccion,numTelefono,correo,salario,FechaIngre,FechaNac);
+    public String actualizarEmpleado(@RequestParam Long IdEmpleado, @RequestParam String nombre,@RequestParam String apellido,@RequestParam String direccion, @RequestParam String numTelefono,@RequestParam String correoElect,@RequestParam String salario,@RequestParam String FechaIngre,@RequestParam String FechaNac) {
+        empleadosService.actualizarEmpleado(IdEmpleado, nombre,apellido,direccion,numTelefono,correoElect,salario,FechaIngre,FechaNac);
         return "redirect:/empleados/listado";
     }
     @GetMapping("/eliminar/{IdEmpleado}")
@@ -59,8 +59,8 @@ public class EmpleadosController {
         return "empleados/agregar";
     }
     @PostMapping("/guardar")
-    public String guardar(@RequestParam Long IdEmpleado, @RequestParam String nombre,@RequestParam String apellido,@RequestParam String direccion, @RequestParam String numTelefono,@RequestParam String correo,@RequestParam String salario,@RequestParam String FechaIngre,@RequestParam String FechaNac) {
-        empleadosService.insertarEmpleado(IdEmpleado, nombre,apellido,direccion,numTelefono,correo,salario,FechaIngre,FechaNac);
+    public String guardar(@RequestParam Long IdEmpleado, @RequestParam String nombre,@RequestParam String apellido,@RequestParam String direccion, @RequestParam String numTelefono,@RequestParam String correoElect,@RequestParam String salario,@RequestParam String FechaIngre,@RequestParam String FechaNac) {
+        empleadosService.insertarEmpleado(IdEmpleado, nombre,apellido,direccion,numTelefono,correoElect,salario,FechaIngre,FechaNac);
         return "redirect:/empleados/listado";
     }
 }

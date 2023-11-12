@@ -7,42 +7,39 @@
     <body>
         <header th:replace="~{layout/plantilla :: header}"></header>
 
-
-        <section th:fragment="editarCategoria">
+        <section th:fragment="productos">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/empleados/actualizar}" method="post"
-                          class="was-validated"                          
+                    <form th:action="@{/productos/guardar}" method="post"
+                          class="was-validated"
                           enctype="multipart/form-data">
-                        <input type="hidden" id="IdEmpleado" name="idProveedor" th:value="${IdEmpleado}"/>
+                        <input type="hidden" id="IdTipoProducto" name="IdTipoProducto" th:value="${idUltimoProducto}"/>
 
                         <div class="container">
                             <div class="row">
                                 <div class="col">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4>Actualizar</h4>
+                                            <h4>Agregar</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="mb-3">
-                                                <input type="text" class="form-control"  id="nombre" 
-                                                       name="nombre" th:value="${proveedor.nombre}" required="true"/>
+                                                <label>Nombre del producto</label>
+                                                <input type="text" class="form-control"  id="nombre"
+                                                       name="nombre"  required="true"/>
                                             </div>
-                                            <div class="mb-3">
-                                                <input type="text" class="form-control"id="numTelefono" name="numTelefono" 
-                                                       th:value="${proveedor.numTelefono}" required="true"/>
-                                            </div>
+                                            
                                              <div class="mb-3">
-                                                <input type="text" class="form-control"id="direccion" name="direccion" 
-                                                       th:value="${proveedor.direccion}" required="true"/>
+                                                <label>Detalles del producto</label>
+                                                <input type="text" class="form-control"id="detalles" name="detalles"
+                                                       required="true"/>
                                             </div>
                                             <div style="display:flex;justify-content: center">
                                                 <button type="submit" class=" btn btn-success">
                                                 <i class="fas fa-check"></i> guardar
                                                 </button>
                                             </div>
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +49,6 @@
                 </div>
             </div>
         </section>
-
         <footer th:replace="~{layout/plantilla :: footer}"></footer>
     </body>
 </html>

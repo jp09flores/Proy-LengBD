@@ -19,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/productos")
+@Slf4j
 public class ProductosController {
 
     @Autowired
