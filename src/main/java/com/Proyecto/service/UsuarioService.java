@@ -21,7 +21,7 @@ public interface UsuarioService {
     
     public void eliminarUsuario(Long id);
     
-     public Long obtenerUltimoUsuario();
+    public Long obtenerUltimoUsuario();
      
-     public void insertarUsuario(Long id, String nombre, String correo);
+    public void insertarUsuario(Long id, String nombre, String correo);
 }

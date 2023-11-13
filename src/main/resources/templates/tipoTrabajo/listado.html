@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Listado</title>
+    </head>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}"></header>
+
+        <section class="py-4 mb-4 bg-light">
+            <div style="display: flex">
+                <div class="col-md-3">   
+                    <a th:href="@{/tipo/agregar}"
+                       class="mx-5 btn btn-success">
+                        <i class='fas fa-trash'></i> Agregar
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+        <div class="container">
+            <div style="display: flex">
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Tipos de Trabajos</h4>
+                        </div>
+                        <div th:if="${tipo_trabajos != null and !tipo_trabajos.empty}">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>#id</th>
+                                        <th>Nombre</th>
+                                        <th>Requisitos</th>
+                                        <th>Contenido</th>
+                                        <th>Detalles</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="tipoTrabajo, contador : ${tipo_trabajos}">
+                                        <td>[[${contador.count}]]</td>
+                                        <td>[[${tipoTrabajo.nombre}]]</td>
+                                        <td>[[${tipoTrabajo.requisitos}]]</td>
+                                        <td>[[${tipoTrabajo.contenido}]]</td>
+                                        <td>[[${tipoTrabajo.detalles}]]</td>
+                                        <td
+                                            <a th:href="@{/tipo/modificar/}+${tipoTrabajo.tipo_Trabajo_id}"
+                                               class="btn btn-success">
+                                                <i class='fas fa-pencil'></i> Modificar
+                                            </a>
+                                            <a th:href="@{/tipo/eliminar/}+${tipoTrabajo.tipo_Trabajo_id}"
+                                               class="btn btn-danger">
+                                                <i class='fas fa-trash'></i> Eliminar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center p-2" th:if="${tipo_trabajos == null or tipo_trabajos.empty}">
+                            <span>[[#{lista.vacia}]]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    </body>
+</html>
