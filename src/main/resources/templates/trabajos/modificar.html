@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Inicio</title>
+    </head>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}"></header>
+
+
+        <section th:fragment="editarCategoria">
+            <section class="py-4 mb-4 bg-light">
+                <div style="display: flex">
+                    <div class="col-md-3">   
+                        <a th:href="@{/trabajos/listado}"
+                           class="mx-5 btn btn-primary">
+                            <i class="fa-solid fa-arrow-left"></i> regresar
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form th:action="@{/trabajos/actualizar}" method="post"
+                          class="was-validated"                          
+                          enctype="multipart/form-data">
+                         <input type="hidden" id="idTrabajo" name="idTrabajo" th:value="${trabajoid}"/>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Actualizar</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="idTipoTrabajo">idTipoTrabajo</label>
+                                                <select name="idTipoTrabajo" 
+                                                        th:field="*{trabajo.idTipoTrabajo}"
+                                                        class="form-select" 
+                                                        aria-label="Default select example">
+                                                    <option th:each="c : ${usuarios}" th:value="${c.id}" th:text="${c.id}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                                <input type="hidden" class="form-control" id="fecha" name="fecha" th:value="${trabajo.fecha}"/>
+                                            <div class="mb-3">
+                                                <label for="idCliente">Cliente</label>
+                                                <select name="idCliente" 
+                                                        class="form-select"
+                                                        th:field="*{trabajo.idCliente}"
+                                                        aria-label="Default select example">
+                                                    <option th:each="c : ${usuarios}" th:value="${c.id}" th:text="${c.id}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>numPlaca(######)-(ABC###)</label>
+                                                <input type="text" class="form-control"id="numPlaca" ]
+                                                       th:value="${trabajo.numPlaca}"
+                                                       name="numPlaca" minlength="6" maxlength="6"
+                                                       required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>cantProductos</label>
+                                                <input type="number" class="form-control"
+                                                       th:value="${trabajo.cantProductos}"
+                                                       id="cantProductos" name="cantProductos" 
+                                                       required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="idEmpleado">Empleado</label>
+                                                <select name="idEmpleado" 
+                                                        class="form-select" 
+                                                        th:field="${trabajo.idEmpleado}"
+                                                        aria-label="Default select example">
+                                                    <option th:each="c : ${empleados}" th:value="${c.IdEmpleado}" th:text="${c.nombre}">
+                                                    </option>
+                                                </select>
+                                            </div>
+
+
+                                            <div style="display:flex;justify-content: center">
+                                                <button type="submit" class=" btn btn-success">
+                                                    <i class="fas fa-check"></i> guardar
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    </body>
+</html>
