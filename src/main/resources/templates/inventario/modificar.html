@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Inicio</title>
+    </head>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}"></header>
+
+
+        <section th:fragment="EditarProductos">
+            <section class="py-4 mb-4 bg-light">
+                <div style="display: flex">
+                    <div class="col-md-3">   
+                        <a th:href="@{/inventario/listado}"
+                           class="mx-5 btn btn-primary">
+                            <i class="fa-solid fa-arrow-left"></i> regresar
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form th:action="@{/inventario/actualizar}" method="post"
+                          class="was-validated"                          
+                          enctype="multipart/form-data">
+                        <input type="hidden" id="idProducto" name="idProducto" th:value="${productoid}"/>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Actualizar</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="idTipoProducto">Id Tipo Producto</label>
+                                                <select name="idTipoProducto" 
+                                                        th:field="*{producto.idTipoProducto}"
+                                                        class="form-select" 
+                                                        aria-label="Default select example">
+                                                    <option th:each="c : ${tipoProductoLista}" th:value="${c.IdTipoProducto}" th:text="${c.nombre}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Nombre</label>
+                                                <input type="text" class="form-control"  id="nombre"
+                                                        th:value="${producto.nombre}"
+                                                       name="nombre"  required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Fecha Ingreso</label>
+                                                <input type="date" class="form-control"  id="fechaIngre"
+                                                        th:value="${producto.fechaIngre}"
+                                                       name="fechaIngre"  required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Stock</label>
+                                                <input type="number" class="form-control"  id="stock"
+                                                        th:value="${producto.stock}"
+                                                       name="stock"  required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Detalles</label>
+                                                <input type="text" class="form-control"  id="detalles"
+                                                        th:value="${producto.detalles}"
+                                                       name="detalles"  required="true"/>
+                                            </div>
+                                             <div style="display:flex;justify-content: center">
+                                                <button type="submit" class=" btn btn-success">
+                                                    <i class="fas fa-check"></i> Guardar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    </body>
+</html>
