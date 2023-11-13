@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{layout/plantilla :: head}">
         <title>Clientes</title>
     </head>
     <body>
         <header th:replace="~{layout/plantilla :: header}"></header>
 
         <section th:fragment="agregarCliente">
+            <section class="py-4 mb-4 bg-light">
+                <div style="display: flex">
+                    <div class="col-md-3">   
+                        <a th:href="@{/clientes/listado}"
+                           class="mx-5 btn btn-primary">
+                            <i class="fa-solid fa-arrow-left"></i> regresar
+                        </a>
+                    </div>
+                </div>
+            </section>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/cliente/guardar}" method="post"
+                    <form th:action="@{/clientes/guardar}" method="post"
                           class="was-validated"                          
                           enctype="multipart/form-data">
-                        <input type="hidden" id="id" name="id" th:value="${idUltimoCliente}"/>
+                        <input type="hidden" id="idCliente" name="idCliente" th:value="${idUltimoCliente}"/>
 
                         <div class="container">
                             <div class="row">
@@ -31,7 +41,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label>Contraseña</label>
-                                                <input type="text" class="form-control"id="contraseña" name="contraseña" 
+                                                <input type="text" class="form-control"id="contra" name="contra" 
                                                        required="true"/>
                                             </div>
                                             <div class="mb-3">
@@ -51,12 +61,12 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label>Telefono</label>
-                                                <input type="text" class="form-control"id="telefono" name="telefono" 
-                                                       required="true"/>
+                                                <input type="number" class="form-control"id="telefono" name="telefono" 
+                                                       required="true" />
                                             </div>
                                             <div class="mb-3">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control"id="correoElect" name="correoElect" 
+                                                <input type="email" class="form-control"id="correo" name="correo" 
                                                        required="true"/>
                                             </div>
                                             <div style="display:flex;justify-content: center">

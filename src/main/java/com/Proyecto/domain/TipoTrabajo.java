@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="tipo_trabajo")
-public class TipoTrabajo {
+public class TipoTrabajo implements Serializable{
     
     private static final long serialVersionUID =1L;
     @Id

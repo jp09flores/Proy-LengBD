@@ -15,7 +15,7 @@ public interface VehiculoService {
             String marca,
             String color,
             String modelo,
-            String year);
+            String ano);
     
     public void eliminarVehiculo(String numPlaca);
      

@@ -30,7 +30,7 @@ public class VehiculoController {
         return "vehiculo/listado";
     }
     
-    @GetMapping("/modificar/{id}")
+    @GetMapping("/modificar/{placa}")
     public String obtenerVehiculo(@PathVariable String placa, Model model) {
         Vehiculo vehiculo = VehiculoService.seleccionarVehiculo(placa);
         String vehiculo_id = placa;
@@ -44,7 +44,7 @@ public class VehiculoController {
         VehiculoService.actualizarVehiculo(numPlaca, numMotor, marca, color, modelo, year);
         return "redirect:/vehiculo/listado";
     }
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/eliminar/{placa}")
     public String eliminarVehiculo(@PathVariable String placa) {
         VehiculoService.eliminarVehiculo(placa);
          return "redirect:/vehiculo/listado";

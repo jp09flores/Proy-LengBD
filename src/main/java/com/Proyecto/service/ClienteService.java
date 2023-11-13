@@ -11,9 +11,14 @@ public interface ClienteService {
     
     public void actualizarCliente(
             Long idCliente,
-            String username,
-            String correoElect);
-    
+            String username, 
+            String contrasena,
+            String nombre,
+            String apellido,
+            String direccion,
+            String numTelefono,
+            String correoElectronico);
+   
     public void eliminarCliente(Long idCliente);
     
     public Long obtenerUltimoCliente();

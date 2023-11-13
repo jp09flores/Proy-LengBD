@@ -12,7 +12,9 @@ public interface TipoTrabajoService {
     public void actualizarTipoTrabajo(
             Long idTipoTrabajo,
             String nombre,
-            String requisitos);
+            String requisitos,
+            String contenido,
+            String detalles);
     
     public void eliminarTipoTrabajo(Long idTipoTrabajo);
     

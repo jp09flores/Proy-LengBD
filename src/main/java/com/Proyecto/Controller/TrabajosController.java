@@ -4,13 +4,19 @@
  */
 package com.Proyecto.Controller;
 
+import com.Proyecto.domain.Cliente;
 import com.Proyecto.domain.Empleados;
+import com.Proyecto.domain.TipoTrabajo;
 import com.Proyecto.domain.Trabajos;
 import com.Proyecto.domain.Usuario;
+import com.Proyecto.domain.Vehiculo;
+import com.Proyecto.service.ClienteService;
 import com.Proyecto.service.EmpleadosService;
+import com.Proyecto.service.TipoTrabajoService;
 
 import com.Proyecto.service.TrabajosService;
 import com.Proyecto.service.UsuarioService;
+import com.Proyecto.service.VehiculoService;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +43,13 @@ public class TrabajosController {
     @Autowired
     private EmpleadosService empleadosService;
     @Autowired
-    private UsuarioService usuarioService;
+    private TipoTrabajoService tipoTrabajoService;
+    
+    @Autowired
+    private VehiculoService vehiculoService;
+    
+    @Autowired
+    private ClienteService clienteService;
     
    @GetMapping("/listado")
     public String listado(Model model) {
@@ -54,9 +66,14 @@ public class TrabajosController {
         model.addAttribute("trabajoid", trabajoid);
           List<Empleados> empleados = empleadosService.getEmpleados();
         model.addAttribute("empleados", empleados);
-          List<Usuario> usuarios = usuarioService.getUsuarios();
-        model.addAttribute("usuarios", usuarios);
+        List<Cliente> clientes = clienteService.getClientes();
+        model.addAttribute("clientes", clientes);
+          List<TipoTrabajo> tipoTrabajolista = tipoTrabajoService.getTiposTrabajos();
+        model.addAttribute("tipoTrabajolista", tipoTrabajolista);
+         List<Vehiculo> vehiculos = vehiculoService.getTiposVehiculos();
+        model.addAttribute("vehiculos", vehiculos);
        model.addAttribute("idUltimoTrabajo", id);
+       
         return "trabajos/modificar";
     }
     
@@ -76,12 +93,16 @@ public class TrabajosController {
     
      @GetMapping("/agregar")
     public String agregar(Model model) {
-          List<Empleados> empleados = empleadosService.getEmpleados();
+           List<Empleados> empleados = empleadosService.getEmpleados();
         model.addAttribute("empleados", empleados);
-          List<Usuario> usuarios = usuarioService.getUsuarios();
-        model.addAttribute("usuarios", usuarios);
+          List<TipoTrabajo> tipoTrabajolista = tipoTrabajoService.getTiposTrabajos();
+        model.addAttribute("tipoTrabajolista", tipoTrabajolista);
+         List<Vehiculo> vehiculos = vehiculoService.getTiposVehiculos();
+        model.addAttribute("vehiculos", vehiculos);
        Long id = trabajosService.obtenerUltimoTrabajo();
        model.addAttribute("idUltimoTrabajo", id);
+       List<Cliente> clientes = clienteService.getClientes();
+        model.addAttribute("clientes", clientes);
         return "trabajos/agregar";
     }
     @PostMapping("/guardar")

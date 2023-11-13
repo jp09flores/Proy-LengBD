@@ -11,17 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+@Service
 public class VehiculoServiceImpl implements VehiculoService {
 
     @Autowired
     VehiculoDao vehiculoDao;
-    
+
     @Autowired
     private EntityManager entityManager;
-    
-    
-    
+
     @Override
     @Transactional(readOnly = true)
     public List<Vehiculo> getTiposVehiculos() {
@@ -30,74 +28,83 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
+    @Transactional
     public Vehiculo seleccionarVehiculo(String numPlaca) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("seleccionar_vehiculo")
-                .registerStoredProcedureParameter("v_num", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_num_motor", String.class, ParameterMode.OUT)
-                .registerStoredProcedureParameter("v_marca", String.class, ParameterMode.OUT)
-                .registerStoredProcedureParameter("v_color", String.class, ParameterMode.OUT)
-                .registerStoredProcedureParameter("v_modelo", String.class, ParameterMode.OUT)
-                .registerStoredProcedureParameter("v_year", String.class, ParameterMode.OUT)
-                .setParameter("v_num", numPlaca);
-        
+                .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_num_motor", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_marca", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_color", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_modelo", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_year", String.class, ParameterMode.OUT)
+                .setParameter("p_num_placa", numPlaca);
+
         query.execute();
-        
-        String numMotor = (String) query.getOutputParameterValue("v_num_motor");
-        String marca = (String) query.getOutputParameterValue("v_marca");
-        String color = (String) query.getOutputParameterValue("v_color");
-        String modelo = (String) query.getOutputParameterValue("v_modelo");
-        String year = (String) query.getOutputParameterValue("v_year");
-        
+
+        String numMotor = (String) query.getOutputParameterValue("p_num_motor");
+        String marca = (String) query.getOutputParameterValue("p_marca");
+        String color = (String) query.getOutputParameterValue("p_color");
+        String modelo = (String) query.getOutputParameterValue("p_modelo");
+        String year = (String) query.getOutputParameterValue("p_year");
+
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setNumMotor(numMotor);
         vehiculo.setMarca(marca);
         vehiculo.setColor(color);
+        vehiculo.setNumPlaca(numPlaca);
         vehiculo.setModelo(modelo);
-        vehiculo.setYear(year);
+        vehiculo.setAno(year);
+        
         return vehiculo;
     }
 
     @Override
     @Transactional
-    public void actualizarVehiculo(String numPlaca, String numMotor, String marca, String color, String modelo, String year) {
-        entityManager.createStoredProcedureQuery("actualizar_vehiculo")
-                .registerStoredProcedureParameter("v_num", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_marca", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_color", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_modelo", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_año", String.class, ParameterMode.IN)
-                .setParameter("v_num", numPlaca)
-                .setParameter("v_marca", marca)
-                .setParameter("v_color", color)
-                .setParameter("v_modelo", modelo)
-                .setParameter("v_year", year)
-                .execute();
-    }
-
-    @Override
     public void eliminarVehiculo(String numPlaca) {
-        entityManager.createStoredProcedureQuery("eliminar_vehiculo")
-                .registerStoredProcedureParameter("v_num", String.class, ParameterMode.IN)
-                .setParameter("v_num", numPlaca)
-                .execute();
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_vehiculo")
+                .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
+                .setParameter("p_num_placa", numPlaca);
+
+        query.execute();
     }
 
     @Override
+    @Transactional
+    public void actualizarVehiculo(String numPlaca, String numMotor, String marca, String color, String modelo, String year) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("actualizar_vehiculo")
+                .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_num_motor", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_marca", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_color", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_modelo", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_year", String.class, ParameterMode.IN)
+                .setParameter("p_num_placa", numPlaca)
+                .setParameter("p_num_motor", numMotor)
+                .setParameter("p_marca", marca)
+                .setParameter("p_color", color)
+                .setParameter("p_modelo", modelo)
+                .setParameter("p_year", year);
+
+        query.execute();
+    }
+
+    @Override
+    @Transactional
     public void insertarVehiculo(String numPlaca, String numMotor, String marca, String color, String modelo, String year) {
-        entityManager.createStoredProcedureQuery("insertar_vehiculo")
-                .registerStoredProcedureParameter("v_numPlaca", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_num_motor", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_marca", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_color", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_modelo", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("v_year", String.class, ParameterMode.IN)
-                
-                .setParameter("v_numPlaca", numPlaca)
-                .setParameter("v_num_motor", numMotor)
-                .setParameter("v_marca", marca)
-                .setParameter("v_color", color)
-                .setParameter("v_modelo", modelo)
-                .setParameter("v_year", year)
-                .execute();
-    }    
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("insertar_vehiculo")
+                .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_num_motor", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_marca", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_color", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_modelo", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_year", String.class, ParameterMode.IN)
+                .setParameter("p_num_placa", numPlaca)
+                .setParameter("p_num_motor", numMotor)
+                .setParameter("p_marca", marca)
+                .setParameter("p_color", color)
+                .setParameter("p_modelo", modelo)
+                .setParameter("p_year", year);
+
+        query.execute();
+    }
 }

@@ -4,11 +4,10 @@
  */
 package com.Proyecto.Controller;
 
-import com.Proyecto.domain.Usuario;
+import com.Proyecto.domain.Cliente;
 import com.Proyecto.domain.Valoracion;
-import com.Proyecto.service.UsuarioService;
+import com.Proyecto.service.ClienteService;
 import com.Proyecto.service.ValoracionService;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class ValoracionController {
     @Autowired
-    private UsuarioService usuarioService;
+    private ClienteService clienteService;
     @Autowired
     private ValoracionService valoracionService;
     
@@ -46,8 +45,8 @@ public class ValoracionController {
         Long valoracion_id = id;
         model.addAttribute("valoracion", valoracion);
         model.addAttribute("valoracion_id", valoracion_id);
-         List<Usuario> usuarios = usuarioService.getUsuarios();
-        model.addAttribute("usuarios", usuarios);
+         List<Cliente> clientes = clienteService.getClientes();
+        model.addAttribute("clientes", clientes);
         return "valoracion/modificar";
     }
     
@@ -65,8 +64,8 @@ public class ValoracionController {
     
      @GetMapping("/agregar")
     public String agregar(Model model) {
-         List<Usuario> usuarios = usuarioService.getUsuarios();
-        model.addAttribute("usuarios", usuarios);
+          List<Cliente> clientes = clienteService.getClientes();
+        model.addAttribute("clientes", clientes);
        Long id = valoracionService.obtenerUltimaValoracion();
        model.addAttribute("idUltimoValoracion", id);
         return "valoracion/agregar";

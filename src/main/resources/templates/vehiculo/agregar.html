@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{layout/plantilla :: head}">
         <title>Vehiculos</title>
     </head>
     <body>
         <header th:replace="~{layout/plantilla :: header}"></header>
 
         <section th:fragment="agregarVehiculos">
+            <section class="py-4 mb-4 bg-light">
+                <div style="display: flex">
+                    <div class="col-md-3">   
+                        <a th:href="@{/vehiculo/listado}"
+                           class="mx-5 btn btn-primary">
+                            <i class="fa-solid fa-arrow-left"></i> regresar
+                        </a>
+                    </div>
+                </div>
+            </section>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">

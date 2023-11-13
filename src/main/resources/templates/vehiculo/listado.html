@@ -12,7 +12,7 @@
                 <div class="col-md-3">   
                     <a th:href="@{/vehiculo/agregar}"
                        class="mx-5 btn btn-success">
-                        <i class='fas fa-trash'></i> Agregar
+                        <i class='fas fa-add'></i> Agregar
                     </a>
                 </div>
             </div>
@@ -37,6 +37,7 @@
                                         <th>Color</th>
                                         <th>Modelo</th>
                                         <th>Año</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,8 +48,8 @@
                                         <td>[[${vehiculo.marca}]]</td>
                                         <td>[[${vehiculo.color}]]</td>
                                         <td>[[${vehiculo.modelo}]]</td>
-                                        <td>[[${vehiculo.year}]]</td>
-                                        <td
+                                        <td>[[${vehiculo.ano}]]</td>
+                                        <td>
                                             <a th:href="@{/vehiculo/modificar/}+${vehiculo.numPlaca}"
                                                class="btn btn-success">
                                                 <i class='fas fa-pencil'></i> Modificar

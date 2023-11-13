@@ -38,10 +38,10 @@
                                         <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="idCategoria">Id Categoria</label>
-                                                <select name="idCliente" 
+                                                  <select name="idCliente"
                                                         class="form-select" 
                                                         aria-label="Default select example">
-                                                    <option th:each="c : ${usuarios}" th:value="${c.id}" th:text="${c.id}">
+                                                    <option th:each="c : ${clientes}" th:value="${c.idCliente}" th:text="${c.nombre}">
                                                     </option>
                                                 </select>
                                             </div>
@@ -57,8 +57,8 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label>valoracion</label>
-                                                <input type="text" class="form-control"id="valoracion" name="valoracion" 
-                                                       required="true"/>
+                                                <input type="number" class="form-control"id="valoracion" name="valoracion" 
+                                                       required="true" max="5"/>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="hidden" class="form-control" id="fechaEmi" name="fechaEmi"/>

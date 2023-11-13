@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 @Slf4j
 public class ClienteController {
     
@@ -27,7 +27,7 @@ public class ClienteController {
     public String listado(Model model) {
         List<Cliente> clientes = clienteService.getClientes();
         model.addAttribute("clientes", clientes);
-        return "cliente/listado";
+        return "clientes/listado";
     }
     
     @GetMapping("/modificar/{id}")
@@ -36,29 +36,38 @@ public class ClienteController {
         Long cliente_id = id;
         model.addAttribute("cliente", cliente);
         model.addAttribute("cliente_id", cliente_id);
-        return "cliente/modificar";
+        return "clientes/modificar";
     }
     
     @PostMapping("/actualizar")
-    public String actualizarCliente(@RequestParam Long id, @RequestParam String username, @RequestParam String correo) {
-        clienteService.actualizarCliente(id, username, correo);
-        return "redirect:/cliente/listado";
+    public String actualizarCliente(@RequestParam Long idCliente,
+            @RequestParam String username, 
+            @RequestParam String contra,
+            @RequestParam String nombre,
+            @RequestParam String apellido,
+            @RequestParam String direccion,
+            @RequestParam String numTelefono,
+            @RequestParam String correoElectronico) {
+        clienteService.actualizarCliente(idCliente, username, contra, nombre, apellido, direccion, numTelefono, correoElectronico);
+        return "redirect:/clientes/listado";
     }
     @GetMapping("/eliminar/{id}")
     public String eliminarCliente(@PathVariable Long id) {
         clienteService.eliminarCliente(id);
-         return "redirect:/cliente/listado";
+         return "redirect:/clientes/listado";
     }
     
     @GetMapping("/agregar")
     public String agregar(Model model) {
        Long id = clienteService.obtenerUltimoCliente();
-       model.addAttribute("idUltimoUsuario", id);
-        return "usuario/agregar";
+       model.addAttribute("idUltimoCliente", id);
+        return "clientes/agregar";
     }
     @PostMapping("/guardar")
-    public String guardar(@RequestParam Long id, @RequestParam String username, @RequestParam String contra, @RequestParam String nombre, @RequestParam String apellido,@RequestParam String direccion,@RequestParam String telefono, @RequestParam String correo) {
-        clienteService.insertarCliente(id, username, contra, nombre, apellido, direccion, telefono, correo);
-        return "redirect:/usuario/listado";
+    public String guardar(@RequestParam Long idCliente, @RequestParam String username, @RequestParam String contra,
+            @RequestParam String nombre, @RequestParam String apellido,@RequestParam String direccion,
+            @RequestParam String telefono, @RequestParam String correo) {
+        clienteService.insertarCliente(idCliente, username, contra, nombre, apellido, direccion, telefono, correo);
+        return "redirect:/clientes/listado";
     }
 }

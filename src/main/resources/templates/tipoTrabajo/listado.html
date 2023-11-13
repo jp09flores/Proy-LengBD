@@ -10,9 +10,9 @@
         <section class="py-4 mb-4 bg-light">
             <div style="display: flex">
                 <div class="col-md-3">   
-                    <a th:href="@{/tipo/agregar}"
+                    <a th:href="@{/tipoTrabajo/agregar}"
                        class="mx-5 btn btn-success">
-                        <i class='fas fa-trash'></i> Agregar
+                        <i class='fas fa-add'></i> Agregar
                     </a>
                 </div>
             </div>
@@ -35,6 +35,7 @@
                                         <th>Requisitos</th>
                                         <th>Contenido</th>
                                         <th>Detalles</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,12 +45,12 @@
                                         <td>[[${tipoTrabajo.requisitos}]]</td>
                                         <td>[[${tipoTrabajo.contenido}]]</td>
                                         <td>[[${tipoTrabajo.detalles}]]</td>
-                                        <td
-                                            <a th:href="@{/tipo/modificar/}+${tipoTrabajo.tipo_Trabajo_id}"
+                                        <td>
+                                            <a th:href="@{/tipoTrabajo/modificar/}+${tipoTrabajo.idTipoTrabajo}"
                                                class="btn btn-success">
                                                 <i class='fas fa-pencil'></i> Modificar
                                             </a>
-                                            <a th:href="@{/tipo/eliminar/}+${tipoTrabajo.tipo_Trabajo_id}"
+                                            <a th:href="@{/tipoTrabajo/eliminar/}+${tipoTrabajo.idTipoTrabajo}"
                                                class="btn btn-danger">
                                                 <i class='fas fa-trash'></i> Eliminar
                                             </a>
@@ -59,7 +60,7 @@
                             </table>
                         </div>
                         <div class="text-center p-2" th:if="${tipo_trabajos == null or tipo_trabajos.empty}">
-                            <span>[[#{lista.vacia}]]</span>
+                            <span>LISTA VACIA</span>
                         </div>
                     </div>
                 </div>

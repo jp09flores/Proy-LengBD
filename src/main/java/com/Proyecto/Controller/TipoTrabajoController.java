@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/tipo")
+@RequestMapping("/tipoTrabajo")
 @Slf4j
-public class TIpoTrabajoController {
+public class TipoTrabajoController {
     
     @Autowired
     private TipoTrabajoService tipoTrabajoService;
@@ -26,7 +26,7 @@ public class TIpoTrabajoController {
     public String listado(Model model) {
         List<TipoTrabajo> tipoTrabajos = tipoTrabajoService.getTiposTrabajos();
         model.addAttribute("tipo_trabajos", tipoTrabajos);
-        return "tipo/listado";
+        return "tipoTrabajo/listado";
     }
     
     @GetMapping("/modificar/{id}")
@@ -35,29 +35,34 @@ public class TIpoTrabajoController {
         Long tipo_Trabajo_id = id;
         model.addAttribute("tipoTrabajo", tipoTrabajo);
         model.addAttribute("tipo_Trabajo_id", tipo_Trabajo_id);
-        return "tipo/modificar";
+        return "tipoTrabajo/modificar";
     }
     
      @PostMapping("/actualizar")
-    public String actualizarTipoTrabajo(@RequestParam Long id, @RequestParam String nombre, @RequestParam String requisitos) {
-        tipoTrabajoService.actualizarTipoTrabajo(id, nombre, requisitos);
-        return "redirect:/tipo/listado";
+    public String actualizarTipoTrabajo(
+            @RequestParam  Long idTipoTrabajo,
+            @RequestParam String nombre,
+            @RequestParam String requisitos,
+            @RequestParam String contenido,
+            @RequestParam String detalles) {
+        tipoTrabajoService.actualizarTipoTrabajo(idTipoTrabajo, nombre, requisitos, contenido, detalles);
+        return "redirect:/tipoTrabajo/listado";
     }
     @GetMapping("/eliminar/{id}")
     public String eliminarTipoTrabajo(@PathVariable Long id) {
         tipoTrabajoService.eliminarTipoTrabajo(id);
-         return "redirect:/tipo/listado";
+         return "redirect:/tipoTrabajo/listado";
     }
     
     @GetMapping("/agregar")
     public String agregar(Model model) {
        Long id = tipoTrabajoService.obtenerUltimoTipoTrabajo();
-       model.addAttribute("idUltimoUsuario", id);
-        return "tipo/agregar";
+       model.addAttribute("idUltimoTtrabajo", id);
+        return "tipoTrabajo/agregar";
     }
     @PostMapping("/guardar")
-    public String guardar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String requisitos, @RequestParam String contenido, @RequestParam String detalles) {
-        tipoTrabajoService.insertarTipoTrabajo(id, nombre, requisitos, contenido, detalles);
-        return "redirect:/tipo/listado";
+    public String guardar(@RequestParam Long idTipoTrabajo, @RequestParam String nombre, @RequestParam String requisitos, @RequestParam String contenido, @RequestParam String detalles) {
+        tipoTrabajoService.insertarTipoTrabajo(idTipoTrabajo, nombre, requisitos, contenido, detalles);
+        return "redirect:/tipoTrabajo/listado";
     }
 }
