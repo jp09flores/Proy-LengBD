@@ -5,7 +5,6 @@
 package com.Proyecto.Controller;
 
 
-import com.Proyecto.domain.Usuario;
 
 import com.Proyecto.service.UsuarioService;
 import java.util.List;
@@ -24,9 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
     
     
-    @Autowired
-    private UsuarioService usuarioService;
-    
+
     @RequestMapping("/")
     public String page(Model model) {
         return "index";

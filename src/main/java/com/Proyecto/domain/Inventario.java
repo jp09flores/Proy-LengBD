@@ -19,23 +19,33 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name="usuarios")
-public class Usuario implements Serializable{
+@Table(name="inventario")
+public class Inventario implements Serializable{
     
     private static final long serialVersionUID =1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
+    @Column(name="id_producto")
+    private Long idProducto;
+    private Long idTipoProducto;
     private String nombre;
-    private String correo;
-
-    public Usuario() {
+    private String fechaIngre;
+    private Integer stock;
+    private String detalles;
+    
+    
+    public Inventario() {
     }
 
-    public Usuario(Long id, String nombre, String correo) {
-        this.id = id;
+    public Inventario(Long idProducto, Long idTipoProducto, String nombre, String fechaIngre, Integer stock, String detalles) {
+        this.idProducto = idProducto;
+        this.idTipoProducto = idTipoProducto;
         this.nombre = nombre;
-        this.correo = correo;
+        this.fechaIngre = fechaIngre;
+        this.stock = stock;
+        this.detalles = detalles;
     }
+
+   
+    
 }

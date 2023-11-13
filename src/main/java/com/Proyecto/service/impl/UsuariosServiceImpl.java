@@ -31,7 +31,6 @@ public class UsuariosServiceImpl implements UsuarioService{
          List<Usuario> Usuario = usuarioDao.findAll();
         return Usuario;
     }
-    
      @Autowired
     private EntityManager entityManager;
      

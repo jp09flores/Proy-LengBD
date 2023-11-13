@@ -4,17 +4,17 @@
  */
 package com.Proyecto.service;
 
-import com.Proyecto.domain.Productos;
+import com.Proyecto.domain.TipoProducto;
 import java.util.List;
 
 /**
  *
  * @author micro
  */
-public interface ProductosService {
-public List<Productos> getProductos();
+public interface TipoProductoService {
+public List<TipoProducto> getProductos();
      
-public Productos SeleccionarProductos(Long IdTipoProducto);
+public TipoProducto SeleccionarProductos(Long IdTipoProducto);
 public void eliminarTipoProducto(Long IdTipoProducto);
 public void actualizarProductos(Long IdTipoProducto, String nombre,   String detalles);
 public void insertarProductos(Long IdTipoProducto, String nombre,   String detalles);

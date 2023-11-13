@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{layout/plantilla :: head}">
@@ -9,10 +10,20 @@
 
 
         <section th:fragment="EditarProductos">
+            <section class="py-4 mb-4 bg-light">
+                <div style="display: flex">
+                    <div class="col-md-3">   
+                        <a th:href="@{/tipoProducto/listado}"
+                           class="mx-5 btn btn-primary">
+                            <i class="fa-solid fa-arrow-left"></i> regresar
+                        </a>
+                    </div>
+                </div>
+            </section>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/productos/actualizar}" method="post"
+                    <form th:action="@{/tipoProducto/actualizar}" method="post"
                           class="was-validated"                          
                           enctype="multipart/form-data">
                         <input type="hidden" id="IdTipoProducto" name="IdTipoProducto" th:value="${IdTipoProducto}"/>
@@ -26,12 +37,14 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="mb-3">
+                                                <label>Nombre del producto</label>
                                                 <input type="text" class="form-control"  id="nombre" 
-                                                       name="nombre" th:value="${producto.nombre}" required="true"/>
+                                                       name="nombre" th:value="${tipoProducto.nombre}" required="true"/>
                                             </div>
                                             <div class="mb-3">
+                                                 <label>Detalles del producto</label>
                                                 <input type="text" class="form-control"id="detalles" name="detalles" 
-                                                       th:value="${producto.detalles}" required="true"/>
+                                                       th:value="${tipoProducto.detalles}" required="true"/>
                                             </div>
                                             <div style="display:flex;justify-content: center">
                                                 <button type="submit" class=" btn btn-success">

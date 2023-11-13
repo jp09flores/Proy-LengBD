@@ -8,10 +8,20 @@
         <header th:replace="~{layout/plantilla :: header}"></header>
 
         <section th:fragment="productos">
+            <section class="py-4 mb-4 bg-light">
+                <div style="display: flex">
+                    <div class="col-md-3">   
+                        <a th:href="@{/tipoProducto/listado}"
+                           class="mx-5 btn btn-primary">
+                            <i class="fa-solid fa-arrow-left"></i> regresar
+                        </a>
+                    </div>
+                </div>
+            </section>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/productos/guardar}" method="post"
+                    <form th:action="@{/tipoProducto/guardar}" method="post"
                           class="was-validated"
                           enctype="multipart/form-data">
                         <input type="hidden" id="IdTipoProducto" name="IdTipoProducto" th:value="${idUltimoProducto}"/>

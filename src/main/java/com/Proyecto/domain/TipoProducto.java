@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="TIPO_PRODUCTO")
-public class Productos implements Serializable {
+public class TipoProducto implements Serializable {
  private static final long serialVersionUID =1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +20,10 @@ public class Productos implements Serializable {
   private String nombre;
   private String detalles;
 
-    public Productos() {
+    public TipoProducto() {
     }
 
-    public Productos(Long IdTipoProducto, String nombre, String detalles) {
+    public TipoProducto(Long IdTipoProducto, String nombre, String detalles) {
         this.IdTipoProducto = IdTipoProducto;
         this.nombre = nombre;
         this.detalles = detalles;
