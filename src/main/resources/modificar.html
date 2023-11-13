@@ -8,11 +8,13 @@
         <header th:replace="~{layout/plantilla :: header}"></header>
 
 
+
+
         <section th:fragment="editarCategoria">
             <section class="py-4 mb-4 bg-light">
                 <div style="display: flex">
                     <div class="col-md-3">   
-                        <a th:href="@{/proveedores/listado}"
+                        <a th:href="@{/valoracion/listado}"
                            class="mx-5 btn btn-primary">
                             <i class="fa-solid fa-arrow-left"></i> regresar
                         </a>
@@ -22,10 +24,10 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/proveedores/actualizar}" method="post"
+                    <form th:action="@{/valoracion/actualizar}" method="post"
                           class="was-validated"                          
                           enctype="multipart/form-data">
-                        <input type="hidden" id="idProveedor" name="idProveedor" th:value="${idProveedor}"/>
+                        <input type="hidden" id="idValoracion" name="idValoracion" th:value="${valoracion_id}"/>
 
                         <div class="container">
                             <div class="row">
@@ -36,27 +38,37 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="mb-3">
-                                                <input type="text" class="form-control"  id="nombre" 
-                                                       name="nombre" th:value="${proveedor.nombre}" required="true"/>
+                                                <label>idCliente</label>
+
+                                                <select name="idCliente"
+                                                        th:field="*{valoracion.idCliente}"
+                                                        class="form-select" 
+                                                        aria-label="Default select example">
+                                                    <option th:each="c : ${usuarios}" th:value="${c.id}" th:text="${c.id}">
+                                                    </option>
+                                                </select>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control"id="numTelefono" name="numTelefono" 
-                                                       th:value="${proveedor.numTelefono}" required="true"/>
+                                                <label>comentario</label>
+                                                <input type="text" class="form-control"id="comentario" name="comentario" 
+                                                       th:value="${valoracion.comentario}" required="true"/>
                                             </div>
-                                             <div class="mb-3">
-                                                <input type="text" class="form-control"id="direccion" name="direccion" 
-                                                       th:value="${proveedor.direccion}" required="true"/>
+                                            <div class="mb-3">
+                                                <label>valoracion</label>
+                                                <input type="text" class="form-control"  id="valoracion" 
+                                                       name="valoracion" th:value="${valoracion.valoracion}" required="true"/>
                                             </div>
-                                             <div class="mb-3">
-                                                <input type="text" class="form-control"id="detalles" name="detalles" 
-                                                       th:value="${proveedor.detalles}" required="true"/>
+                                            <div class="mb-3">
+                                                <label>fechaEmi</label>
+                                                <input type="text" class="form-control"id="fechaEmi" name="fechaEmi" 
+                                                       th:value="${valoracion.fechaEmi}" required="true"readonly=""/>
                                             </div>
                                             <div style="display:flex;justify-content: center">
                                                 <button type="submit" class=" btn btn-success">
-                                                <i class="fas fa-check"></i> guardar
+                                                    <i class="fas fa-check"></i> guardar
                                                 </button>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>

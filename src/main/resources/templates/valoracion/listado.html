@@ -10,7 +10,7 @@
         <section class="py-4 mb-4 bg-light">
             <div style="display: flex">
                 <div class="col-md-3">   
-                    <a th:href="@{/proveedores/agregar}"
+                    <a th:href="@{/valoracion/agregar}"
                        class="mx-5 btn btn-success">
                         <i class='fas fa-add'></i> agregar
                     </a>
@@ -23,32 +23,34 @@
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Proveedores</h4>
+                                <h4>Valoraciones</h4>
                             </div>
-                            <div th:if="${proveedores != null and !proveedores.empty}">
+                            <div th:if="${valoraciones != null and !valoraciones.empty}">
                                 <table class="table table-striped table-hover">
                                     <thead class="table-dark">
-                                        <tr><th>#id</th>
-                                            <th>Proveedor</th>
-                                            <th>Numero de telefono</th>
-                                            <th>Dirrecion</th>
-                                            <th>Detalles</th>
+                                        <tr><th>#</th>
+                                            <th>Cliente</th>
+                                            <th>Comentario</th>
+                                            <th>Valoracion</th>
+                                            <th>Fecha</th>
                                             <th></th></tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="proveedor, contador : ${proveedores}">
+                                        <tr th:each="valoracion, contador : ${valoraciones}">
                                             <td>[[${contador.count}]]</td>
 
-                                            <td>[[${proveedor.nombre}]]</td>
-                                            <td>[[${proveedor.numTelefono}]]</td>
-                                            <td>[[${proveedor.direccion}]]</td>
-                                            <td>[[${proveedor.detalles}]]</td>
+                                            <td>[[${valoracion.idCliente}]]</td>
+                                            <td>[[${valoracion.comentario}]]</td>
+                                            
+                                            <td>[[${valoracion.valoracion}]]</td>
+                                            <td>[[${valoracion.fechaEmi}]]</td>
+                                            
                                             <td>
-                                                <a th:href="@{/proveedores/modificar/}+${proveedor.idProveedor}"
+                                                <a th:href="@{/valoracion/modificar/}+${valoracion.idValoracion}"
                                                    class="btn btn-success">
                                                     <i class='fas fa-pencil'></i> Modificar
                                                 </a>
-                                                <a th:href="@{/proveedores/eliminar/}+${proveedor.idProveedor}"
+                                                <a th:href="@{/valoracion/eliminar/}+${valoracion.idValoracion}"
                                                    class="btn btn-danger">
                                                     <i class='fas fa-trash'></i> Eliminar
                                                 </a>
@@ -57,8 +59,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="text-center p-2" th:if="${proveedores == null or proveedores.empty}">
-                                <span>[[#{lista.vacia}]]</span>
+                            <div class="text-center p-2" th:if="${valoraciones == null or valoraciones.empty}">
+                                <span>LISTA VACIA</span>
                             </div>
                         </div>
                     </div>

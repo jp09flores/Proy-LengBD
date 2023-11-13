@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.Proyecto.service.impl;
-import com.Proyecto.dao.ProductosDao;
-import com.Proyecto.domain.Productos;
-import com.Proyecto.service.ProductosService;
+
+import com.Proyecto.domain.TipoProducto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
@@ -13,47 +12,50 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.Proyecto.dao.TipoProductoDao;
+import com.Proyecto.service.TipoProductoService;
 
 @Service
-public class ProductosServiceImpl implements ProductosService {
+public class TipoProductoServiceImpl implements TipoProductoService {
+
     @Autowired
-    ProductosDao productosDao; 
-    
-   
+    TipoProductoDao productosDao;
+
     @Autowired
     private EntityManager entityManager;
-    
+
     @Override
-    public Productos SeleccionarProductos(Long IdTipoProducto) {
-    StoredProcedureQuery query = entityManager.createStoredProcedureQuery("seleccionar_tipo_producto")
-            .registerStoredProcedureParameter("p_id_tipo_producto", Long.class, ParameterMode.IN)
-            .registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT)
-            .registerStoredProcedureParameter("p_detalle", String.class, ParameterMode.OUT)
-            .setParameter("p_id_tipo_producto", IdTipoProducto);
+    public TipoProducto SeleccionarProductos(Long IdTipoProducto) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("seleccionar_tipo_producto")
+                .registerStoredProcedureParameter("p_id_tipo_producto", Long.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_detalle", String.class, ParameterMode.OUT)
+                .setParameter("p_id_tipo_producto", IdTipoProducto);
 
-    query.execute();
-    String nombre = (String) query.getOutputParameterValue("p_nombre");
-    String detalle = (String) query.getOutputParameterValue("p_detalle");
+        query.execute();
+        String nombre = (String) query.getOutputParameterValue("p_nombre");
+        String detalle = (String) query.getOutputParameterValue("p_detalle");
 
-    Productos producto = new Productos();
-    producto.setNombre(nombre);
-    producto.setDetalles(detalle);
+        TipoProducto producto = new TipoProducto();
+        producto.setNombre(nombre);
+        producto.setDetalles(detalle);
 
-    return producto;
-}
-   @Transactional
-   @Override 
+        return producto;
+    }
+
+    @Transactional
+    @Override
     public void eliminarTipoProducto(Long IdTipoProducto) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_tipo_producto")
                 .registerStoredProcedureParameter("p_id_tipo_producto", Long.class, ParameterMode.IN)
                 .setParameter("p_id_tipo_producto", IdTipoProducto);
 
         query.execute();
-    } 
-     
+    }
+
     @Transactional
     @Override
-    public void actualizarProductos(Long IdTipoProducto, String nombre,   String detalles){
+    public void actualizarProductos(Long IdTipoProducto, String nombre, String detalles) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("actualizar_tipo_producto")
                 .registerStoredProcedureParameter("p_id_tipo_producto", Long.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.IN)
@@ -63,10 +65,11 @@ public class ProductosServiceImpl implements ProductosService {
                 .setParameter("p_detalles", detalles);
 
         query.execute();
-    } 
+    }
+
     @Transactional
     @Override
-    public void insertarProductos(Long IdTipoProducto, String nombre,   String detalles){
+    public void insertarProductos(Long IdTipoProducto, String nombre, String detalles) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("insertar_tipo_producto")
                 .registerStoredProcedureParameter("p_id_tipo_producto", Long.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.IN)
@@ -77,6 +80,7 @@ public class ProductosServiceImpl implements ProductosService {
 
         query.execute();
     }
+
     @Override
     public Long ObtenerUltimoProducto() {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("obtener_ultimo_tipo_producto")
@@ -84,13 +88,14 @@ public class ProductosServiceImpl implements ProductosService {
 
         query.execute();
 
-        return (Long) query.getOutputParameterValue("p_id_tipo_producto")+1;
+        return (Long) query.getOutputParameterValue("p_id_tipo_producto") + 1;
     }
-     @Override
+
+    @Override
     @Transactional(readOnly = true)
-    public List<Productos> getProductos() {
-        List<Productos> productos = productosDao.findAll();
+    public List<TipoProducto> getProductos() {
+        List<TipoProducto> productos = productosDao.findAll();
         return productos;
     }
-    
+
 }

@@ -3,10 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.Proyecto.dao;
-import com.Proyecto.domain.Productos;
-import java.util.List;
+
+import com.Proyecto.domain.Trabajos;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-public interface ProductosDao extends JpaRepository<Productos,Long>{
+
+/**
+ *
+ * @author jp09f
+ */
+public interface TrabajosDao extends JpaRepository<Trabajos,Long>{
     
 }

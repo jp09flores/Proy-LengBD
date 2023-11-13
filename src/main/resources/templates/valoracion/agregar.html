@@ -8,11 +8,11 @@
         <header th:replace="~{layout/plantilla :: header}"></header>
 
 
-       <section th:fragment="proveedores">
-           <section class="py-4 mb-4 bg-light">
+        <section th:fragment="editarCategoria">
+            <section class="py-4 mb-4 bg-light">
                 <div style="display: flex">
                     <div class="col-md-3">   
-                        <a th:href="@{/proveedores/listado}"
+                        <a th:href="@{/valoracion/listado}"
                            class="mx-5 btn btn-primary">
                             <i class="fa-solid fa-arrow-left"></i> regresar
                         </a>
@@ -22,10 +22,11 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/proveedores/guardar}" method="post"
+                    <form th:action="@{/valoracion/guardar}" method="post"
                           class="was-validated"                          
                           enctype="multipart/form-data">
-                        <input type="hidden" id="idProveedor" name="idProveedor" th:value="${idUltimoProveedor}"/>
+                        <input type="hidden" id="idValoracion" name="idValoracion" th:value="${idUltimoValoracion}"/>
+
 
                         <div class="container">
                             <div class="row">
@@ -36,31 +37,45 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="mb-3">
-                                                <label>Nombre del proveedor</label>
-                                                <input type="text" class="form-control"  id="nombre" 
-                                                       name="nombre"  required="true"/>
+                                                <label for="idCategoria">Id Categoria</label>
+                                                <select name="idCliente" 
+                                                        class="form-select" 
+                                                        aria-label="Default select example">
+                                                    <option th:each="c : ${usuarios}" th:value="${c.id}" th:text="${c.id}">
+                                                    </option>
+                                                </select>
                                             </div>
                                             <div class="mb-3">
-                                                 <label>Numero de telefono</label>
-                                                <input type="number" class="form-control"id="numTelefono" name="numTelefono" 
+                                                <label>idCliente</label>
+                                                <input type="text" class="form-control"  id="idCliente" 
+                                                       name="idCliente"  required="true"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>comentario</label>
+                                                <input type="text" class="form-control"id="comentario" name="comentario" 
                                                        required="true"/>
                                             </div>
                                             <div class="mb-3">
-                                                 <label>Direccion</label>
-                                                <input type="text" class="form-control"id="direccion" name="direccion" 
+                                                <label>valoracion</label>
+                                                <input type="text" class="form-control"id="valoracion" name="valoracion" 
                                                        required="true"/>
                                             </div>
-                                             <div class="mb-3">
-                                                 <label>Detalles de proveedor</label>
-                                                <input type="text" class="form-control"id="detalles" name="detalles" 
-                                                       required="true"/>
+                                            <div class="mb-3">
+                                                <input type="hidden" class="form-control" id="fechaEmi" name="fechaEmi"/>
+                                                <script>
+                                                    var fechaInput = document.getElementById("fechaEmi");
+                                                    var fechaActual = new Date();
+                                                    var fechaFormateada = fechaActual.toISOString().split('T')[0];
+                                                    fechaInput.value = fechaFormateada;
+                                                </script>
                                             </div>
+
                                             <div style="display:flex;justify-content: center">
                                                 <button type="submit" class=" btn btn-success">
-                                                <i class="fas fa-check"></i> guardar
+                                                    <i class="fas fa-check"></i> guardar
                                                 </button>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>

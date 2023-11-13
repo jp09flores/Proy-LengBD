@@ -10,9 +10,9 @@
         <section class="py-4 mb-4 bg-light">
             <div style="display: flex">
                 <div class="col-md-3">   
-                    <a th:href="@{/proveedores/agregar}"
+                    <a th:href="@{/inventario/agregar}"
                        class="mx-5 btn btn-success">
-                        <i class='fas fa-add'></i> agregar
+                        <i class='fas fa-add'></i> Agregar
                     </a>
                 </div>
             </div>
@@ -23,32 +23,37 @@
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Proveedores</h4>
+                                <h4>INVENTARIO</h4>
                             </div>
-                            <div th:if="${proveedores != null and !proveedores.empty}">
+                            <div th:if="${inventario != null and !inventario.empty}">
                                 <table class="table table-striped table-hover">
                                     <thead class="table-dark">
-                                        <tr><th>#id</th>
-                                            <th>Proveedor</th>
-                                            <th>Numero de telefono</th>
-                                            <th>Dirrecion</th>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Id tipo Producto</th>
+                                            <th>Nombre</th>
+                                            <th>Fecha Ingreso</th>
+                                            <th>Stock</th>
                                             <th>Detalles</th>
-                                            <th></th></tr>
+
+
+                                            <th></th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="proveedor, contador : ${proveedores}">
+                                        <tr th:each="producto, contador : ${inventario}">
                                             <td>[[${contador.count}]]</td>
-
-                                            <td>[[${proveedor.nombre}]]</td>
-                                            <td>[[${proveedor.numTelefono}]]</td>
-                                            <td>[[${proveedor.direccion}]]</td>
-                                            <td>[[${proveedor.detalles}]]</td>
+                                            <td>[[${producto.idTipoProducto}]]</td>
+                                            <td>[[${producto.nombre}]]</td>
+                                            <td>[[${producto.fechaIngre}]]</td>
+                                            <td>[[${producto.stock}]]</td>
+                                            <td>[[${producto.detalles}]]</td>
                                             <td>
-                                                <a th:href="@{/proveedores/modificar/}+${proveedor.idProveedor}"
+                                                <a th:href="@{/inventario/modificar/}+${producto.idProducto}"
                                                    class="btn btn-success">
                                                     <i class='fas fa-pencil'></i> Modificar
                                                 </a>
-                                                <a th:href="@{/proveedores/eliminar/}+${proveedor.idProveedor}"
+                                                <a th:href="@{/inventario/eliminar/}+${producto.idProducto}"
                                                    class="btn btn-danger">
                                                     <i class='fas fa-trash'></i> Eliminar
                                                 </a>
@@ -57,12 +62,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="text-center p-2" th:if="${proveedores == null or proveedores.empty}">
-                                <span>[[#{lista.vacia}]]</span>
+                            <div class="text-center p-2" th:if="${inventario == null or inventario.empty}">
+                                <span>LISTA VACIA</span>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>

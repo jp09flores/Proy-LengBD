@@ -7,12 +7,11 @@
     <body>
         <header th:replace="~{layout/plantilla :: header}"></header>
 
-
-       <section th:fragment="proveedores">
-           <section class="py-4 mb-4 bg-light">
+        <section th:fragment="productos">
+            <section class="py-4 mb-4 bg-light">
                 <div style="display: flex">
                     <div class="col-md-3">   
-                        <a th:href="@{/proveedores/listado}"
+                        <a th:href="@{/inventario/listado}"
                            class="mx-5 btn btn-primary">
                             <i class="fa-solid fa-arrow-left"></i> regresar
                         </a>
@@ -22,10 +21,10 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/proveedores/guardar}" method="post"
-                          class="was-validated"                          
+                    <form th:action="@{/inventario/guardar}" method="post"
+                          class="was-validated"
                           enctype="multipart/form-data">
-                        <input type="hidden" id="idProveedor" name="idProveedor" th:value="${idUltimoProveedor}"/>
+                        <input type="hidden" id="idProducto" name="idProducto" th:value="${idUltimoProducto}"/>
 
                         <div class="container">
                             <div class="row">
@@ -36,31 +35,40 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="mb-3">
-                                                <label>Nombre del proveedor</label>
-                                                <input type="text" class="form-control"  id="nombre" 
+                                                <label for="idTipoProducto">Id Tipo Producto</label>
+                                                <select name="idTipoProducto" 
+                                                        class="form-select" 
+                                                        aria-label="Default select example">
+                                                    <option th:each="c : ${tipoProductoLista}" th:value="${c.IdTipoProducto}" th:text="${c.nombre}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Nombre</label>
+                                                <input type="text" class="form-control"  id="nombre"
                                                        name="nombre"  required="true"/>
                                             </div>
                                             <div class="mb-3">
-                                                 <label>Numero de telefono</label>
-                                                <input type="number" class="form-control"id="numTelefono" name="numTelefono" 
-                                                       required="true"/>
+                                                <label>Fecha Ingreso</label>
+                                                <input type="date" class="form-control"  id="fechaIngre"
+                                                       name="fechaIngre"  required="true"/>
                                             </div>
                                             <div class="mb-3">
-                                                 <label>Direccion</label>
-                                                <input type="text" class="form-control"id="direccion" name="direccion" 
-                                                       required="true"/>
+                                                <label>Stock</label>
+                                                <input type="number" class="form-control"  id="stock"
+                                                       name="stock"  required="true"/>
                                             </div>
-                                             <div class="mb-3">
-                                                 <label>Detalles de proveedor</label>
-                                                <input type="text" class="form-control"id="detalles" name="detalles" 
-                                                       required="true"/>
+                                            <div class="mb-3">
+                                                <label>Detalles</label>
+                                                <input type="text" class="form-control"  id="detalles"
+                                                       name="detalles"  required="true"/>
                                             </div>
+
                                             <div style="display:flex;justify-content: center">
                                                 <button type="submit" class=" btn btn-success">
-                                                <i class="fas fa-check"></i> guardar
+                                                    <i class="fas fa-check"></i> Guardar
                                                 </button>
                                             </div>
-                                            
                                         </div>
                                     </div>
                                 </div>

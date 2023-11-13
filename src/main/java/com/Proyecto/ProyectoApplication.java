@@ -1,8 +1,8 @@
 package com.Proyecto;
 
-import com.Proyecto.domain.Countries;
+
 import com.Proyecto.domain.Empleados;
-import com.Proyecto.domain.Usuario;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,12 +24,13 @@ public class ProyectoApplication /*implements CommandLineRunner*/ {
  
 //    @Override
 //    public void run(String... args) throws Exception {
-//        String sql = "SELECT * FROM empleados";
+
+//        String sql = "SELECT * FROM countries";
 //         
-//        List<Empleados> empleados = jdbcTemplate.query(sql,
-//                BeanPropertyRowMapper.newInstance(Empleados.class));
+//        List<Countries> students = jdbcTemplate.query(sql,
+//                BeanPropertyRowMapper.newInstance(Countries.class));
 //         
-//        empleados.forEach(System.out :: println);
+//        students.forEach(System.out :: println);
 //    }
    
 

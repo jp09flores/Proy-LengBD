@@ -1,6 +1,5 @@
 package com.Proyecto.Controller;
-import com.Proyecto.domain.Productos;
-import com.Proyecto.service.ProductosService;
+import com.Proyecto.domain.TipoProducto;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,55 +15,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import com.Proyecto.service.TipoProductoService;
 
 @Controller
-@RequestMapping("/productos")
+@RequestMapping("/tipoProducto")
 @Slf4j
-public class ProductosController {
+public class TipoProductoController {
 
     @Autowired
-    private ProductosService productoService;
+    private TipoProductoService productoService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
-        List<Productos> productos = productoService.getProductos();
-        model.addAttribute("productos", productos);
-        return "productos/listado";
+        List<TipoProducto> tipoProductos = productoService.getProductos();
+        model.addAttribute("tipoProductos", tipoProductos);
+        return "tipoProducto/listado";
     }
 
     @GetMapping("/modificar/{IdTipoProducto}")
     public String obtenerProducto(@PathVariable Long IdTipoProducto, Model model) {
-        Productos producto = productoService.SeleccionarProductos(IdTipoProducto);
-        Long producto_id = IdTipoProducto;
-        model.addAttribute("producto", producto);
-        model.addAttribute("IdTipoProducto", producto_id);
-        return "productos/modificar";
+        TipoProducto tipoProducto = productoService.SeleccionarProductos(IdTipoProducto);
+        Long tipoProductoId = IdTipoProducto;
+        model.addAttribute("tipoProducto", tipoProducto);
+        model.addAttribute("IdTipoProducto", tipoProductoId);
+        return "tipoProducto/modificar";
     }
 
     @PostMapping("/actualizar")
     public String actualizarProducto(@RequestParam Long IdTipoProducto, @RequestParam String nombre,
          @RequestParam String detalles) {
         productoService.actualizarProductos(IdTipoProducto,nombre, detalles);
-        return "redirect:/productos/listado";
+        return "redirect:/tipoProducto/listado";
     }
 
     @GetMapping("/eliminar/{IdTipoProducto}")
     public String eliminarProducto(@PathVariable Long IdTipoProducto) {
         productoService.eliminarTipoProducto(IdTipoProducto);
-        return "redirect:/productos/listado";
+        return "redirect:/tipoProducto/listado";
     }
 
     @GetMapping("/agregar")
     public String agregar(Model model) {
         Long id = productoService.ObtenerUltimoProducto();
         model.addAttribute("idUltimoProducto", id);
-        return "productos/agregar";
+        return "tipoProducto/agregar";
     }
 
     @PostMapping("/guardar")
     public String guardar(@RequestParam Long IdTipoProducto, @RequestParam String nombre,
         @RequestParam String detalles) {
         productoService.insertarProductos(IdTipoProducto, nombre, detalles);
-        return "redirect:/productos/listado";
+        return "redirect:/tipoProducto/listado";
     }
 }
