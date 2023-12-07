@@ -11,6 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Types;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
 @Service
 public class VehiculoServiceImpl implements VehiculoService {
 
@@ -58,14 +66,33 @@ public class VehiculoServiceImpl implements VehiculoService {
         return vehiculo;
     }
 
+    
+    private final SimpleJdbcCall jdbcCall;
+
+    @Autowired
+    public VehiculoServiceImpl(DataSource dataSource) {
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("F_eliminar_vehiculo")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.INTEGER),
+                        new SqlParameter("p_num_placa", Types.VARCHAR)
+                );
+    }
+
     @Override
     @Transactional
-    public void eliminarVehiculo(String numPlaca) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_vehiculo")
-                .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
-                .setParameter("p_num_placa", numPlaca);
+    public int eliminarVehiculo(String numPlaca) {
+        MapSqlParameterSource inParams = new MapSqlParameterSource();
+        inParams.addValue("p_num_placa", numPlaca);
 
-        query.execute();
+        Map<String, Object> result = jdbcCall.execute(inParams);
+
+        if (result.containsKey("RETURN")) {
+            return (int) result.get("RETURN");
+        } else {
+            return -1;
+        }
     }
 
     @Override

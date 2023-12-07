@@ -38,6 +38,9 @@ public class InventarioController {
     public String listado(Model model) {
         List<Inventario> inventario = inventarioService.getInventario();
         model.addAttribute("inventario", inventario);
+          String productoMasAntiguo = inventarioService.obtenerProductoMasAntiguo();
+         model.addAttribute("productoMasAntiguo", productoMasAntiguo); 
+          
         return "inventario/listado";
     }
     

@@ -5,6 +5,7 @@
 package com.Proyecto.Controller;
 import com.Proyecto.domain.Empleados;
 import com.Proyecto.service.EmpleadosService;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,8 @@ public class EmpleadosController {
     public String listado(Model model) {
         List<Empleados> empleados = empleadosService.getEmpleados();
         model.addAttribute("empleados", empleados);
+        BigDecimal salarioPromedio = empleadosService.obtenerSalarioPromedio();
+        model.addAttribute("salarioPromedio", salarioPromedio);
         return "empleados/listado";
     }
     
@@ -40,6 +43,7 @@ public class EmpleadosController {
         Long ID_EMPLEADO = IdEmpleado;
         model.addAttribute("empleado", empleados);
         model.addAttribute("IdEmpleado", ID_EMPLEADO);
+        
         return "empleados/modificar";
     }
     @PostMapping("/actualizar")

@@ -23,4 +23,5 @@ public interface InventarioService {
     void insertarProducto(Long idProducto, Long idTipoProducto, String nombre, String fechaIngreso, Integer stock, String detalles);
 
     Long obtenerUltimoProducto();
+    public String obtenerProductoMasAntiguo();
 }

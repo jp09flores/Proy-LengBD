@@ -78,16 +78,31 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
     return empleados;
 }
 
- private final SimpleJdbcCall jdbcCall;
+    private final SimpleJdbcCall eliminarEmpleadoJdbcCall;
+    private final SimpleJdbcCall salarioPromedioJdbcCall;
+    private final SimpleJdbcCall jdbcCall;
 
     @Autowired
     public EmpleadosServiceImpl(DataSource dataSource) {
-        this.jdbcCall = new SimpleJdbcCall(dataSource)
+        this.eliminarEmpleadoJdbcCall = new SimpleJdbcCall(dataSource)
                 .withFunctionName("F_eliminar_empleado")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
                         new SqlOutParameter("RETURN", Types.INTEGER),
                         new SqlParameter("p_id_empleado", Types.INTEGER)
+                );
+
+        this.salarioPromedioJdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("f_csalario")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.NUMERIC)
+                );
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("edad_p_emp")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.NUMERIC)
                 );
     }
 
@@ -97,7 +112,7 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
         MapSqlParameterSource inParams = new MapSqlParameterSource();
         inParams.addValue("p_id_empleado", idEmpleado);
 
-        Map<String, Object> result = jdbcCall.execute(inParams);
+        Map<String, Object> result = eliminarEmpleadoJdbcCall.execute(inParams);
 
         if (result.containsKey("RETURN")) {
             return (int) result.get("RETURN");
@@ -105,6 +120,28 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
             return -1;
         }
     }
+    @Transactional
+    public BigDecimal obtenerSalarioPromedio() {
+        Map<String, Object> result = salarioPromedioJdbcCall.execute(new MapSqlParameterSource());
+
+        if (result.containsKey("RETURN")) {
+            return (BigDecimal) result.get("RETURN");
+        } else {
+            return BigDecimal.ZERO;
+        }
+    }
+    @Override
+    @Transactional
+    public double obtenerEdadPromedio() {
+        Map<String, Object> result = jdbcCall.execute(new MapSqlParameterSource());
+
+        if (result.containsKey("RETURN")) {
+            return ((BigDecimal) result.get("RETURN")).doubleValue();
+        } else {
+            return -1.0; // O el valor que desees utilizar para indicar un error
+        }
+    }
+
 
 @Transactional
 @Override
@@ -181,5 +218,7 @@ public Long ObtenerUltimoEmpleado() {
 
     return (Long) query.getOutputParameterValue("p_id_empleado") + 1;
 }
+
+
 
 }

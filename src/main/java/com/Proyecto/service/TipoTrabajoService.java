@@ -26,4 +26,7 @@ public interface TipoTrabajoService {
             String requisitos,
             String contenido,
             String detalles);
+    
+    
+     public String obtenerUltimoTrabajo();
 }

@@ -20,7 +20,7 @@
         <section>
             <div class="container">
                 <div style="display: flex">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4>INVENTARIO</h4>
@@ -70,6 +70,16 @@
                 </div>
             </div>
         </section>
+        <div class="container my-5">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Producto Más Antiguo</h1>
+                </div>
+                <div class="card-body">
+                   <p>Obtener Producto Más Antiguo: <span th:text="${productoMasAntiguo}"></span></p>
+                </div>
+            </div>
+        </div>
         <footer th:replace="~{layout/plantilla :: footer}"></footer>
     </body>
 </html>

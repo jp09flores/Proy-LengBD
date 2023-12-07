@@ -17,7 +17,7 @@ public interface VehiculoService {
             String modelo,
             String ano);
     
-    public void eliminarVehiculo(String numPlaca);
+    public int eliminarVehiculo(String numPlaca);
      
     public void insertarVehiculo(
             String numPlaca,

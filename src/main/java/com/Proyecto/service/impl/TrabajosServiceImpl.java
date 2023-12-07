@@ -23,6 +23,14 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 
+import java.sql.Types;
+import java.util.Date;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 @Service
 public class TrabajosServiceImpl implements TrabajosService {
 
@@ -71,16 +79,23 @@ public class TrabajosServiceImpl implements TrabajosService {
     }
 
     
-    private final SimpleJdbcCall jdbcCall;
+    private final SimpleJdbcCall eliminarFuncion;
+     private final SimpleJdbcCall jdbcCall;
 
     @Autowired
     public TrabajosServiceImpl(DataSource dataSource) {
-        this.jdbcCall = new SimpleJdbcCall(dataSource)
+        this.eliminarFuncion = new SimpleJdbcCall(dataSource)
                 .withFunctionName("F_eliminar_trabajo")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
                         new SqlOutParameter("RETURN", Types.INTEGER),
                         new SqlParameter("p_id_trabajo", Types.INTEGER)
+                );
+          this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("fecha_lastjob")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.VARCHAR)
                 );
     }
 
@@ -90,12 +105,23 @@ public class TrabajosServiceImpl implements TrabajosService {
         MapSqlParameterSource inParams = new MapSqlParameterSource();
         inParams.addValue("p_id_trabajo", idTrabajo);
 
-        Map<String, Object> result = jdbcCall.execute(inParams);
+        Map<String, Object> result = eliminarFuncion.execute(inParams);
 
         if (result.containsKey("RETURN")) {
             return (int) result.get("RETURN");
         } else {
             return -1;
+        }
+    }
+    @Override
+    @Transactional
+    public String obtenerUltimaFecha() {
+        Map<String, Object> result = jdbcCall.execute(new MapSqlParameterSource());
+
+        if (result.containsKey("RETURN")) {
+            return (String) result.get("RETURN");
+        } else {
+            return "Error al obtener la última fecha de trabajo";
         }
     }
 

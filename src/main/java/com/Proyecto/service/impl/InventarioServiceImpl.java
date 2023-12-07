@@ -70,16 +70,23 @@ public class InventarioServiceImpl implements InventarioService {
         return inventario;
     }
 
-     private final SimpleJdbcCall jdbcCall;
+     private final SimpleJdbcCall eliminarFuncion;
+        private final SimpleJdbcCall jdbcCall;
 
     @Autowired
     public InventarioServiceImpl(DataSource dataSource) {
-        this.jdbcCall = new SimpleJdbcCall(dataSource)
+        this.eliminarFuncion = new SimpleJdbcCall(dataSource)
                 .withFunctionName("F_eliminar_producto")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
                         new SqlOutParameter("RETURN", Types.INTEGER),
                         new SqlParameter("p_id_producto", Types.INTEGER)
+                );
+         this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("f_oldestProduct")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.VARCHAR)
                 );
     }
 
@@ -89,12 +96,23 @@ public class InventarioServiceImpl implements InventarioService {
         MapSqlParameterSource inParams = new MapSqlParameterSource();
         inParams.addValue("p_id_producto", idProducto);
 
-        Map<String, Object> result = jdbcCall.execute(inParams);
+        Map<String, Object> result = eliminarFuncion.execute(inParams);
 
         if (result.containsKey("RETURN")) {
             return (int) result.get("RETURN");
         } else {
             return -1;
+        }
+    }
+    @Override
+    @Transactional
+    public String obtenerProductoMasAntiguo() {
+        Map<String, Object> result = jdbcCall.execute(new MapSqlParameterSource());
+
+        if (result.containsKey("RETURN")) {
+            return (String) result.get("RETURN");
+        } else {
+            return "Error al obtener el producto más antiguo";
         }
     }
 

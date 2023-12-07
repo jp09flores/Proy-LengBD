@@ -20,7 +20,7 @@
         <section>
             <div class="container">
                 <div style="display: flex">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Trabajos</h4>
@@ -71,6 +71,16 @@
                 </div>
             </div>
         </section>
+        <div class="container my-5">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Última Fecha de Trabajo</h1>
+                </div>
+                <div class="card-body">
+                   <p>Obtener Última Fecha: <span th:text="${ultimaFecha}"></span></p>
+                </div>
+            </div>
+        </div>
         <footer th:replace="~{layout/plantilla :: footer}"></footer>
     </body>
 </html>

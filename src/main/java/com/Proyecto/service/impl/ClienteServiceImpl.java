@@ -6,6 +6,7 @@ import com.Proyecto.service.ClienteService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,16 +66,29 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     
+    private final SimpleJdbcCall clientesEliminarFuncion;
+    private final SimpleJdbcCall clienteFuncion;
     private final SimpleJdbcCall jdbcCall;
-
     @Autowired
     public ClienteServiceImpl(DataSource dataSource) {
-        this.jdbcCall = new SimpleJdbcCall(dataSource)
+        this.clientesEliminarFuncion = new SimpleJdbcCall(dataSource)
                 .withFunctionName("F_eliminar_cliente")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
                         new SqlOutParameter("RETURN", Types.INTEGER),
                         new SqlParameter("p_id_cliente", Types.INTEGER)
+                );
+         this.clienteFuncion = new SimpleJdbcCall(dataSource)
+                .withFunctionName("t_clientes")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.NUMERIC)
+                );
+         this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("obtener_cliente_mas_valorado")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.VARCHAR)
                 );
     }
 
@@ -84,12 +98,33 @@ public class ClienteServiceImpl implements ClienteService {
         MapSqlParameterSource inParams = new MapSqlParameterSource();
         inParams.addValue("p_id_cliente", idCliente);
 
-        Map<String, Object> result = jdbcCall.execute(inParams);
+        Map<String, Object> result = clientesEliminarFuncion.execute(inParams);
 
         if (result.containsKey("RETURN")) {
             return (int) result.get("RETURN");
         } else {
             return -1;
+        }
+    }
+    @Transactional
+    public BigDecimal obtenerTotalClientes() {
+        Map<String, Object> result = clienteFuncion.execute(new MapSqlParameterSource());
+
+        if (result.containsKey("RETURN")) {
+            return (BigDecimal) result.get("RETURN");
+        } else {
+            return BigDecimal.ZERO; 
+        }
+    }
+    @Override
+    @Transactional
+    public String obtenerClienteMasValorado() {
+        Map<String, Object> result = jdbcCall.execute(new MapSqlParameterSource());
+
+        if (result.containsKey("RETURN")) {
+            return (String) result.get("RETURN");
+        } else {
+            return "Error al obtener el cliente más valorado";
         }
     }
 

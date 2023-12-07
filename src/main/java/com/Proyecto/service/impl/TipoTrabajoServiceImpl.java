@@ -11,6 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Types;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
 @Service
 public class TipoTrabajoServiceImpl implements TipoTrabajoService {
 
@@ -56,6 +64,28 @@ public class TipoTrabajoServiceImpl implements TipoTrabajoService {
                 .setParameter("p_id_tipo_trabajo", idTipoTrabajo);
 
         query.execute();
+    }
+     private final SimpleJdbcCall jdbcCall;
+
+    @Autowired
+    public TipoTrabajoServiceImpl(DataSource dataSource) {
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("obtener_lastjob")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.VARCHAR)
+                );
+    }
+
+    @Transactional
+    public String obtenerUltimoTrabajo() {
+        Map<String, Object> result = jdbcCall.execute(new MapSqlParameterSource());
+
+        if (result.containsKey("RETURN")) {
+            return (String) result.get("RETURN");
+        } else {
+            return "Error al obtener el último trabajo";
+        }
     }
 
     @Override

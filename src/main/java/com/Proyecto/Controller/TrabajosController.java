@@ -17,6 +17,7 @@ import com.Proyecto.service.TipoTrabajoService;
 import com.Proyecto.service.TrabajosService;
 import com.Proyecto.service.UsuarioService;
 import com.Proyecto.service.VehiculoService;
+import java.util.Date;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,8 @@ public class TrabajosController {
     public String listado(Model model) {
         List<Trabajos> trabajos = trabajosService.getTrabajos();
         model.addAttribute("trabajos", trabajos);
+        String ultimaFecha = trabajosService.obtenerUltimaFecha();
+        model.addAttribute("ultimaFecha", ultimaFecha);
         return "trabajos/listado";
     }
     

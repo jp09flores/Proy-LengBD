@@ -26,6 +26,8 @@ public class TipoTrabajoController {
     public String listado(Model model) {
         List<TipoTrabajo> tipoTrabajos = tipoTrabajoService.getTiposTrabajos();
         model.addAttribute("tipo_trabajos", tipoTrabajos);
+        String ultimoTrabajo = tipoTrabajoService.obtenerUltimoTrabajo();
+         model.addAttribute("ultimoTrabajo", ultimoTrabajo);
         return "tipoTrabajo/listado";
     }
     

@@ -3,6 +3,7 @@ package com.Proyecto.Controller;
 
 import com.Proyecto.domain.Cliente;
 import com.Proyecto.service.ClienteService;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class ClienteController {
     public String listado(Model model) {
         List<Cliente> clientes = clienteService.getClientes();
         model.addAttribute("clientes", clientes);
+        BigDecimal totalClientes = clienteService.obtenerTotalClientes();
+        model.addAttribute("totalClientes", totalClientes);
+        String clienteMasValorado = clienteService.obtenerClienteMasValorado();
+        model.addAttribute("clienteMasValorado", clienteMasValorado);
         return "clientes/listado";
     }
     

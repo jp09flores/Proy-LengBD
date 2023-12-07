@@ -21,7 +21,7 @@
         <section>
         <div class="container">
             <div style="display: flex">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>Clientes</h4>
@@ -71,7 +71,26 @@
             </div>
         </div>
     </section>
-        
+        <div class="container my-5">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Total de Clientes</h1>
+                </div>
+                <div class="card-body">
+                   <p>Obtener Total de Clientes: <span th:text="${totalClientes}"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="container my-5">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Cliente Más Valorado</h1>
+                </div>
+                <div class="card-body">
+                   <p>Obtener Cliente Más Valorado: <span th:text="${clienteMasValorado}"></span></p>
+                </div>
+            </div>
+        </div>
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     </body>
 </html>

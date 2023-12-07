@@ -1,6 +1,7 @@
 
 package com.Proyecto.service;
 import com.Proyecto.domain.Empleados;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface EmpleadosService {
@@ -31,6 +32,10 @@ public List<Empleados> getEmpleados();
             String FechaNac);
 
     public Long ObtenerUltimoEmpleado();
+    
+    public BigDecimal obtenerSalarioPromedio();
+    
+     public double obtenerEdadPromedio();
         
         
 }
