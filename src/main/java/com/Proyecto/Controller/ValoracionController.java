@@ -4,8 +4,10 @@
  */
 package com.Proyecto.Controller;
 
+import com.Proyecto.dao.vValoracionDao;
 import com.Proyecto.domain.Cliente;
 import com.Proyecto.domain.Valoracion;
+import com.Proyecto.domain.vValoracion;
 import com.Proyecto.service.ClienteService;
 import com.Proyecto.service.ValoracionService;
 import java.util.List;
@@ -31,11 +33,14 @@ public class ValoracionController {
     private ClienteService clienteService;
     @Autowired
     private ValoracionService valoracionService;
-    
+    @Autowired
+    private vValoracionDao vvaloraciondao;
    @GetMapping("/listado")
     public String listado(Model model) {
         List<Valoracion> valoracion = valoracionService.getValoraciones();
         model.addAttribute("valoraciones", valoracion);
+         List<vValoracion> vValoracion = vvaloraciondao.findAll();
+        model.addAttribute("vValoracion", vValoracion);
         return "valoracion/listado";
     }
     

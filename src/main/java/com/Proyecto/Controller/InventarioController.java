@@ -4,8 +4,10 @@
  */
 package com.Proyecto.Controller;
 
+import com.Proyecto.dao.vInventarioDao;
 import com.Proyecto.domain.Inventario;
 import com.Proyecto.domain.TipoProducto;
+import com.Proyecto.domain.vInventario;
 import com.Proyecto.service.InventarioService;
 import com.Proyecto.service.TipoProductoService;
 
@@ -33,13 +35,16 @@ public class InventarioController {
     private InventarioService inventarioService;
     @Autowired
     private TipoProductoService tipoProductoService;
-    
+    @Autowired
+    private vInventarioDao vinventarioDao;
    @GetMapping("/listado")
     public String listado(Model model) {
         List<Inventario> inventario = inventarioService.getInventario();
         model.addAttribute("inventario", inventario);
           String productoMasAntiguo = inventarioService.obtenerProductoMasAntiguo();
          model.addAttribute("productoMasAntiguo", productoMasAntiguo); 
+          List<vInventario> vInventario = vinventarioDao.findAll();
+        model.addAttribute("vInventario", vInventario);
           
         return "inventario/listado";
     }

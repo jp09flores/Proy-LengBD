@@ -1,7 +1,10 @@
 
 package com.Proyecto.Controller;
 
+import com.Proyecto.dao.vClientesDao;
 import com.Proyecto.domain.Cliente;
+import com.Proyecto.domain.vClientes;
+import com.Proyecto.domain.vVehiculos;
 import com.Proyecto.service.ClienteService;
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,7 +26,8 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
     
-    
+     @Autowired
+    private vClientesDao vclientesdao;
     @GetMapping("/listado")
     public String listado(Model model) {
         List<Cliente> clientes = clienteService.getClientes();
@@ -32,6 +36,9 @@ public class ClienteController {
         model.addAttribute("totalClientes", totalClientes);
         String clienteMasValorado = clienteService.obtenerClienteMasValorado();
         model.addAttribute("clienteMasValorado", clienteMasValorado);
+        
+         List<vClientes> vClientes = vclientesdao.findAll();
+         model.addAttribute("vClientes", vClientes);
         return "clientes/listado";
     }
     

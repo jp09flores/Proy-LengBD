@@ -3,9 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.Proyecto.dao;
-import com.Proyecto.domain.vValoracion;
+
+import com.Proyecto.domain.vClientes;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface vValoracionDao extends JpaRepository<vValoracion, Long>{
+/**
+ *
+ * @author jp09f
+ */
+public interface vClientesDao extends JpaRepository<vClientes, Long> {
     
 }

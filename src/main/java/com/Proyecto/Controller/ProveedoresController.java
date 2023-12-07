@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/springframework/Controller.java to edit this template
  */
 package com.Proyecto.Controller;
+import com.Proyecto.dao.vProveedoresDao;
 import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Proveedores;
+import com.Proyecto.domain.vProveedores;
 import com.Proyecto.service.ProveedoresService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,8 @@ public class ProveedoresController {
      @Autowired
     private ProveedoresService proveedoresService;
      
+      @Autowired
+    private vProveedoresDao vproveedoresDao;
      
 
     @Autowired
@@ -39,6 +43,8 @@ public class ProveedoresController {
         List<Proveedores> proveedores =proveedoresService.getProveedores();
         model.addAttribute("proveedores", proveedores);
         
+         List<vProveedores> vProveedores =vproveedoresDao.findAll();
+        model.addAttribute("vProveedores", vProveedores);
         return "proveedores/listado";
     }
     

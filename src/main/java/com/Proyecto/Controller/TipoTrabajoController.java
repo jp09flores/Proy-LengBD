@@ -1,7 +1,9 @@
 
 package com.Proyecto.Controller;
 
+import com.Proyecto.dao.vTiposTrabajosDao;
 import com.Proyecto.domain.TipoTrabajo;
+import com.Proyecto.domain.vTiposTrabajos;
 import com.Proyecto.service.TipoTrabajoService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +23,16 @@ public class TipoTrabajoController {
     
     @Autowired
     private TipoTrabajoService tipoTrabajoService;
-    
+       @Autowired
+    private vTiposTrabajosDao vtipostrabajosdao;
     @GetMapping("/listado")
     public String listado(Model model) {
         List<TipoTrabajo> tipoTrabajos = tipoTrabajoService.getTiposTrabajos();
         model.addAttribute("tipo_trabajos", tipoTrabajos);
         String ultimoTrabajo = tipoTrabajoService.obtenerUltimoTrabajo();
          model.addAttribute("ultimoTrabajo", ultimoTrabajo);
+         List<vTiposTrabajos> vTiposTrabajos = vtipostrabajosdao.findAll();
+        model.addAttribute("vTiposTrabajos", vTiposTrabajos);
         return "tipoTrabajo/listado";
     }
     

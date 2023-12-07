@@ -4,11 +4,13 @@
  */
 package com.Proyecto.Controller;
 
+import com.Proyecto.dao.vTrabajosDao;
 import com.Proyecto.domain.Cliente;
 import com.Proyecto.domain.Empleados;
 import com.Proyecto.domain.TipoTrabajo;
 import com.Proyecto.domain.Trabajos;
 import com.Proyecto.domain.Usuario;
+import com.Proyecto.domain.VTrabajos;
 import com.Proyecto.domain.Vehiculo;
 import com.Proyecto.service.ClienteService;
 import com.Proyecto.service.EmpleadosService;
@@ -52,10 +54,17 @@ public class TrabajosController {
     @Autowired
     private ClienteService clienteService;
     
+      @Autowired
+    private vTrabajosDao vTrabajosDao;
+       
    @GetMapping("/listado")
     public String listado(Model model) {
         List<Trabajos> trabajos = trabajosService.getTrabajos();
         model.addAttribute("trabajos", trabajos);
+        
+     List<VTrabajos> VTrabajos = vTrabajosDao.findAll();
+         model.addAttribute("VTrabajos", VTrabajos);
+        
         String ultimaFecha = trabajosService.obtenerUltimaFecha();
         model.addAttribute("ultimaFecha", ultimaFecha);
         return "trabajos/listado";

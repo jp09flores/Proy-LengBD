@@ -71,6 +71,51 @@
                 </div>
             </div>
         </section>
+                  <section class="my-5">
+        <div class="container">
+            <div style="display: flex">
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Vista de los Trabajos</h4>
+                        </div>
+                        <div th:if="${VTrabajos != null and !VTrabajos.empty}">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Id del Trabajo a realizar</th>
+                                        <th>Tipo de trabajo</th>
+                                        <th>Fecha</th>
+                                        <th>Cliente</th>
+                                        <th>Vehiculo</th>
+                                        <th>Cantiadd de Productos</th>
+                                        <th>Empleado</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="vTra, contador : ${VTrabajos}">
+                                       
+                                        <td>[[${vTra.idTrabajos}]]</td>
+                                        <td>[[${vTra.tipoTrabajo}]]</td>
+                                        
+                                        <td>[[${vTra.cliente}]]</td>
+                                        <td>[[${vTra.vehiculo}]]</td>
+                                        <td>[[${vTra.cantidadProductos}]]</td>
+                                        <td>[[${vTra.empleado}]]</td>
+                                        <td><p>ARREGLAR</p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center p-2" th:if="${VTrabajos == null or VTrabajos.empty}">
+                            <span>LISTA VACIA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
         <div class="container my-5">
             <div class="card">
                 <div class="card-header">

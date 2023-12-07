@@ -67,6 +67,44 @@
             </div>
         </div>
     </section>
+        <section class="my-5">
+        <div class="container">
+            <div style="display: flex">
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Vista Tipos de trabajos</h4>
+                        </div>
+                        <div th:if="${vTiposTrabajos != null and !vTiposTrabajos.empty}">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Id del tipo de trabajo</th>
+                                        <th>Nombre</th>
+                                        <th>Requisitos</th>
+                                        <th>Contenido</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="vTipo, contador : ${vTiposTrabajos}">
+                         
+                                        <td>[[${vTipo.IdTipoTrabajo}]]</td>
+                                        <td>[[${vTipo.nombre}]]</td>
+                                        <td>[[${vTipo.requisitos}]]</td>
+                                        <td>[[${vTipo.contenido}]]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center p-2" th:if="${vTiposTrabajos == null or vTiposTrabajos.empty}">
+                            <span>LISTA VACIA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
          <div class="container my-5">
             <div class="card">
                 <div class="card-header">

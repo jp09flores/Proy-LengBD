@@ -3,23 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.Proyecto.domain;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import lombok.Data;
-/**
- *
- * @author Diana
- */
+
+
 @Data
 @Entity
-@Table(name="VISTA_VALORACIONES_BASICA")
-public class vValoracion  implements Serializable {
-  private static final long serialVersionUID =1L;
+@Table(name="VISTA_TRABAJOS")
+public class VTrabajos implements Serializable{
+    private static final long serialVersionUID =1L;
     @Id
-   private Long idValoracion;
-    private Long idCliente;
-    private String comentario;
+    
+    private long idTrabajos;
+    private String tipoTrabajo;
+    private String fecha;
+    private String cliente;
+    private String vehiculo;
+    private String cantidadProductos;
+    private String empleado;
 }
-

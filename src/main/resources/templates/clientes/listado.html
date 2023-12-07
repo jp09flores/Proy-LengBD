@@ -91,6 +91,48 @@
                 </div>
             </div>
         </div>
+        
+          <section class="my-5">
+        <div class="container">
+            <div style="display: flex">
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Vista Clientes</h4>
+                        </div>
+                        <div th:if="${vClientes != null and !vClientes.empty}">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Id del cliente</th>
+                                        <th>UserName</th>
+                                        <th>Nombre Completo</th>
+                                        <th>Numero de telefono</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="vCliente, contador : ${vClientes}">
+                                        
+                                        <td>[[${vCliente.idCliente}]]</td>
+                                        <td>[[${vCliente.username}]]</td>
+                                        <td>[[${vCliente.nombreCompleto}]]</td>
+                                        <td>[[${vCliente.numTelefono}]]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center p-2" th:if="${vClientes == null or vClientes.empty}">
+                            <span>LISTA VACIA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+        
+        
+        
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     </body>
 </html>

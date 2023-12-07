@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/springframework/Controller.java to edit this template
  */
 package com.Proyecto.Controller;
+import com.Proyecto.dao.vEmpleadoDao;
 import com.Proyecto.domain.Empleados;
+import com.Proyecto.domain.vEmpleados;
 import com.Proyecto.service.EmpleadosService;
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,13 +29,16 @@ public class EmpleadosController {
 
     @Autowired
     private EmpleadosService empleadosService;
-
+        @Autowired
+    private vEmpleadoDao vempleadoDao;
     @GetMapping("/listado")
     public String listado(Model model) {
         List<Empleados> empleados = empleadosService.getEmpleados();
         model.addAttribute("empleados", empleados);
         BigDecimal salarioPromedio = empleadosService.obtenerSalarioPromedio();
         model.addAttribute("salarioPromedio", salarioPromedio);
+         List<vEmpleados> vEmpleados = vempleadoDao.findAll();
+        model.addAttribute("vEmpleados", vEmpleados);
         return "empleados/listado";
     }
     
