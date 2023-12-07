@@ -1,7 +1,9 @@
 
 package com.Proyecto.Controller;
 
+import com.Proyecto.dao.vVehiculoDao;
 import com.Proyecto.domain.Vehiculo;
+import com.Proyecto.domain.vVehiculos;
 import com.Proyecto.service.VehiculoService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +25,15 @@ public class VehiculoController {
     @Autowired
     private VehiculoService VehiculoService;
     
+    @Autowired
+    private vVehiculoDao vVehiculoDao;
+    
     @GetMapping("/listado")
     public String listado(Model model) {
         List<Vehiculo> vehiculos = VehiculoService.getTiposVehiculos();
         model.addAttribute("vehiculos", vehiculos);
+        List<vVehiculos> vVehiculos = vVehiculoDao.findAll();
+        model.addAttribute("vVehiculos", vVehiculos);
         return "vehiculo/listado";
     }
     
@@ -60,4 +67,6 @@ public class VehiculoController {
         VehiculoService.insertarVehiculo(numPlaca, numMotor, marca, color, modelo, year);
         return "redirect:/vehiculo/listado";
     }
+    
+    
 }

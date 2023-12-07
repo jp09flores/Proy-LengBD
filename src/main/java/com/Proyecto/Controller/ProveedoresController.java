@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/springframework/Controller.java to edit this template
  */
 package com.Proyecto.Controller;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Proveedores;
 import com.Proyecto.service.ProveedoresService;
 import java.util.List;
@@ -25,11 +26,19 @@ public class ProveedoresController {
     
      @Autowired
     private ProveedoresService proveedoresService;
+     
+     
+
+    @Autowired
+    public ProveedoresController(ProveedoresService proveedoresService) {
+        this.proveedoresService = proveedoresService;
+    }
     
    @GetMapping("/listado")
     public String listado(Model model) {
         List<Proveedores> proveedores =proveedoresService.getProveedores();
         model.addAttribute("proveedores", proveedores);
+        
         return "proveedores/listado";
     }
     
@@ -65,5 +74,12 @@ public class ProveedoresController {
     public String guardar(@RequestParam Long idProveedor, @RequestParam String nombre, @RequestParam String numTelefono,@RequestParam String direccion,@RequestParam String detalles) {
     proveedoresService.insertarProveedor(idProveedor, nombre,numTelefono,direccion,detalles);
     return "redirect:/proveedores/listado";
+    }
+    
+    @GetMapping("/cursor/{idProveedor}")
+    public String obtenerProveedorCursor(@PathVariable Long idProveedor, Model model) {
+        Cursores cursores = proveedoresService.obtenerProveedorCursor(idProveedor);
+        model.addAttribute("proveedorDetails", cursores.getOutput());
+        return "proveedores/cursor";
     }
 }

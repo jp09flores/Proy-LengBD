@@ -10,7 +10,7 @@ public List<Empleados> getEmpleados();
 
     public Empleados SeleccionarEmpleado(Long idEmpleado);
 
-    public void eliminarEmpleado(Long idEmpleado);
+    public int eliminarEmpleado(Long idEmpleado);
 
     public void actualizarEmpleado(Long IdEmpleado, String nombre,
             String apellido,

@@ -19,7 +19,7 @@ public interface ClienteService {
             String numTelefono,
             String correoElectronico);
    
-    public void eliminarCliente(Long idCliente);
+    public int eliminarCliente(Long idCliente);
     
     public Long obtenerUltimoCliente();
      

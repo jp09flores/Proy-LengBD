@@ -10,7 +10,7 @@ public interface TrabajosService {
 
     Trabajos seleccionarTrabajo(Long idTrabajo);
 
-    void eliminarTrabajo(Long idTrabajo);
+    int eliminarTrabajo(Long idTrabajo);
 
     void actualizarTrabajo(Long idTrabajo, Long idTipoTrabajo, String fecha, Long idCliente, String numPlaca, Integer cantProductos, Long idEmpleado);
 

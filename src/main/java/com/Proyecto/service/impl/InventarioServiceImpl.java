@@ -14,6 +14,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.sql.Types;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 /**
  *
@@ -63,14 +70,32 @@ public class InventarioServiceImpl implements InventarioService {
         return inventario;
     }
 
+     private final SimpleJdbcCall jdbcCall;
+
+    @Autowired
+    public InventarioServiceImpl(DataSource dataSource) {
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("F_eliminar_producto")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.INTEGER),
+                        new SqlParameter("p_id_producto", Types.INTEGER)
+                );
+    }
+
     @Override
     @Transactional
-    public void eliminarProducto(Long idProducto) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_producto")
-                .registerStoredProcedureParameter("p_id_producto", Long.class, ParameterMode.IN)
-                .setParameter("p_id_producto", idProducto);
+    public int eliminarProducto(Long idProducto) {
+        MapSqlParameterSource inParams = new MapSqlParameterSource();
+        inParams.addValue("p_id_producto", idProducto);
 
-        query.execute();
+        Map<String, Object> result = jdbcCall.execute(inParams);
+
+        if (result.containsKey("RETURN")) {
+            return (int) result.get("RETURN");
+        } else {
+            return -1;
+        }
     }
 
     @Override

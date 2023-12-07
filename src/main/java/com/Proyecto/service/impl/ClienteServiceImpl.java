@@ -11,6 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.sql.Types;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
+
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
@@ -54,14 +64,33 @@ public class ClienteServiceImpl implements ClienteService {
         return new Cliente(idCliente, username, contrasena, nombre, apellido, direccion, numTelefono, correoElectronico);
     }
 
+    
+    private final SimpleJdbcCall jdbcCall;
+
+    @Autowired
+    public ClienteServiceImpl(DataSource dataSource) {
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("F_eliminar_cliente")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.INTEGER),
+                        new SqlParameter("p_id_cliente", Types.INTEGER)
+                );
+    }
+
     @Override
     @Transactional
-    public void eliminarCliente(Long idCliente) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_cliente")
-                .registerStoredProcedureParameter("p_id_cliente", Long.class, ParameterMode.IN)
-                .setParameter("p_id_cliente", idCliente);
+    public int eliminarCliente(Long idCliente) {
+        MapSqlParameterSource inParams = new MapSqlParameterSource();
+        inParams.addValue("p_id_cliente", idCliente);
 
-        query.execute();
+        Map<String, Object> result = jdbcCall.execute(inParams);
+
+        if (result.containsKey("RETURN")) {
+            return (int) result.get("RETURN");
+        } else {
+            return -1;
+        }
     }
 
     @Override

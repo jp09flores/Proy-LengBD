@@ -16,7 +16,7 @@ public interface ValoracionService {
 
     Valoracion seleccionarValoracion(Long idValoracion);
 
-    void eliminarValoracion(Long idValoracion);
+    int eliminarValoracion(Long idValoracion);
 
     void actualizarValoracion(Long idValoracion, Long idCliente, String comentario, Integer valoracion, String fechaEmi);
 

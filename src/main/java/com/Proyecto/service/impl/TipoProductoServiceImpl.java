@@ -14,6 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.Proyecto.dao.TipoProductoDao;
 import com.Proyecto.service.TipoProductoService;
+import java.sql.Types;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 @Service
 public class TipoProductoServiceImpl implements TipoProductoService {
@@ -43,14 +50,32 @@ public class TipoProductoServiceImpl implements TipoProductoService {
         return producto;
     }
 
-    @Transactional
-    @Override
-    public void eliminarTipoProducto(Long IdTipoProducto) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_tipo_producto")
-                .registerStoredProcedureParameter("p_id_tipo_producto", Long.class, ParameterMode.IN)
-                .setParameter("p_id_tipo_producto", IdTipoProducto);
+     private final SimpleJdbcCall jdbcCall;
 
-        query.execute();
+    @Autowired
+    public TipoProductoServiceImpl(DataSource dataSource) {
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("F_eliminar_tipo_producto")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.INTEGER),
+                        new SqlParameter("p_id", Types.INTEGER)
+                );
+    }
+
+    @Override
+    @Transactional
+    public int eliminarTipoProducto(Long idTipoProducto) {
+        MapSqlParameterSource inParams = new MapSqlParameterSource();
+        inParams.addValue("p_id", idTipoProducto);
+
+        Map<String, Object> result = jdbcCall.execute(inParams);
+
+        if (result.containsKey("RETURN")) {
+            return (int) result.get("RETURN");
+        } else {
+            return -1;
+        }
     }
 
     @Transactional

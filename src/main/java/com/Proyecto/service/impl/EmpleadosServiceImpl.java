@@ -17,6 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Types;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
+
 @Service
 public class EmpleadosServiceImpl implements EmpleadosService {
     
@@ -69,15 +78,33 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
     return empleados;
 }
 
-@Transactional
-@Override
-public void eliminarEmpleado(Long idEmpleado) {
-    StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_empleado")
-            .registerStoredProcedureParameter("p_id_empleado", Long.class, ParameterMode.IN)
-            .setParameter("p_id_empleado", idEmpleado);
+ private final SimpleJdbcCall jdbcCall;
 
-    query.execute();
-}
+    @Autowired
+    public EmpleadosServiceImpl(DataSource dataSource) {
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("F_eliminar_empleado")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.INTEGER),
+                        new SqlParameter("p_id_empleado", Types.INTEGER)
+                );
+    }
+
+    @Override
+    @Transactional
+    public int eliminarEmpleado(Long idEmpleado) {
+        MapSqlParameterSource inParams = new MapSqlParameterSource();
+        inParams.addValue("p_id_empleado", idEmpleado);
+
+        Map<String, Object> result = jdbcCall.execute(inParams);
+
+        if (result.containsKey("RETURN")) {
+            return (int) result.get("RETURN");
+        } else {
+            return -1;
+        }
+    }
 
 @Transactional
 @Override

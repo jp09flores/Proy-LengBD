@@ -15,7 +15,7 @@ public interface TipoProductoService {
 public List<TipoProducto> getProductos();
      
 public TipoProducto SeleccionarProductos(Long IdTipoProducto);
-public void eliminarTipoProducto(Long IdTipoProducto);
+public int eliminarTipoProducto(Long IdTipoProducto);
 public void actualizarProductos(Long IdTipoProducto, String nombre,   String detalles);
 public void insertarProductos(Long IdTipoProducto, String nombre,   String detalles);
 public Long ObtenerUltimoProducto();  

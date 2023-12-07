@@ -16,7 +16,7 @@ public interface InventarioService {
 
     Inventario seleccionarProducto(Long idProducto);
 
-    void eliminarProducto(Long idProducto);
+    int eliminarProducto(Long idProducto);
 
     void actualizarProducto(Long idProducto, Long idTipoProducto, String nombre, String fechaIngreso, Integer stock, String detalles);
 

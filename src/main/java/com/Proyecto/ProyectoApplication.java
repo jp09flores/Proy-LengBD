@@ -2,6 +2,8 @@ package com.Proyecto;
 
 
 import com.Proyecto.domain.Empleados;
+import com.Proyecto.domain.vValoracion;
+import com.Proyecto.domain.vVehiculos;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
-public class ProyectoApplication /*implements CommandLineRunner*/ {
+public class ProyectoApplication implements CommandLineRunner/**/ {
 
    
     @Autowired
@@ -22,16 +24,20 @@ public class ProyectoApplication /*implements CommandLineRunner*/ {
         SpringApplication.run(ProyectoApplication.class, args);
     }
  
-//    @Override
-//    public void run(String... args) throws Exception {
+     /*
+     
+     
+     */
+    
+   @Override
+    public void run(String... args) throws Exception {
 
-//        String sql = "SELECT * FROM countries";
-//         
-//        List<Countries> students = jdbcTemplate.query(sql,
-//                BeanPropertyRowMapper.newInstance(Countries.class));
-//         
-//        students.forEach(System.out :: println);
-//    }
-   
+        String sql = "SELECT * FROM VISTA_CLIENTES";
+         
+        List<vValoracion> students = jdbcTemplate.query(sql,
+               BeanPropertyRowMapper.newInstance(vValoracion.class));
+         
+        students.forEach(System.out :: println);
+    }
 
 }

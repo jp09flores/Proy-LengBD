@@ -21,6 +21,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.sql.Types;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
+
 @Service
 public class ValoracionServiceImpl  implements ValoracionService{
     @Autowired
@@ -62,14 +72,32 @@ public class ValoracionServiceImpl  implements ValoracionService{
 
         return v;
     }
+    private final SimpleJdbcCall jdbcCall;
+
+    @Autowired
+    public ValoracionServiceImpl(DataSource dataSource) {
+        this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withFunctionName("F_eliminar_valoracion")
+                .withoutProcedureColumnMetaDataAccess()
+                .declareParameters(
+                        new SqlOutParameter("RETURN", Types.INTEGER),
+                        new SqlParameter("p_id_valoracion", Types.INTEGER)
+                );
+    }
+
     @Override
     @Transactional
-    public void eliminarValoracion(Long idValoracion) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("eliminar_valoracion")
-                .registerStoredProcedureParameter("p_id_valoracion", Long.class, ParameterMode.IN)
-                .setParameter("p_id_valoracion", idValoracion);
+    public int eliminarValoracion(Long idValoracion) {
+        MapSqlParameterSource inParams = new MapSqlParameterSource();
+        inParams.addValue("p_id_valoracion", idValoracion);
 
-        query.execute();
+        Map<String, Object> result = jdbcCall.execute(inParams);
+
+        if (result.containsKey("RETURN")) {
+            return (int) result.get("RETURN");
+        } else {
+            return -1;
+        }
     }
     @Override
     @Transactional
