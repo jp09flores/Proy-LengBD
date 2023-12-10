@@ -1,6 +1,7 @@
 package com.Proyecto.service;
 
 import com.Proyecto.domain.Cliente;
+import com.Proyecto.domain.Cursores;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,5 +38,7 @@ public interface ClienteService {
     public BigDecimal obtenerTotalClientes();
     
     public String obtenerClienteMasValorado();
+    
+    public Cursores Cursor(String username);
  
 }

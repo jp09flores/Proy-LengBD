@@ -5,6 +5,7 @@
 package com.Proyecto.service.impl;
 
 import com.Proyecto.dao.TrabajosDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Trabajos;
 import com.Proyecto.service.TrabajosService;
 import jakarta.persistence.EntityManager;
@@ -85,6 +86,7 @@ public class TrabajosServiceImpl implements TrabajosService {
     @Autowired
     public TrabajosServiceImpl(DataSource dataSource) {
         this.eliminarFuncion = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_TRABAJOS")
                 .withFunctionName("F_eliminar_trabajo")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -178,5 +180,27 @@ public class TrabajosServiceImpl implements TrabajosService {
         query.execute();
 
         return (Long) query.getOutputParameterValue("p_id_trabajo") + 1;
+    }
+    
+     @Override
+    public Cursores Cursor(String nombre) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_TRABAJOS_POR_EMPLEADO")
+                .registerStoredProcedureParameter("t_nombre_emp", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("t_id_trabajo", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("t_tipo_trabajo", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("t_fecha", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("t_cliente", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("t_vehiculo", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("t_cant_productos", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_output", String.class, ParameterMode.OUT)
+                .setParameter("t_nombre_emp", nombre);
+        
+        query.execute();
+       String output = (String) query.getOutputParameterValue("p_output");
+
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
     }
 }

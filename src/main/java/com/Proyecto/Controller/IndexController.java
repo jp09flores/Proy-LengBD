@@ -4,8 +4,6 @@
  */
 package com.Proyecto.Controller;
 
-
-
 import com.Proyecto.service.UsuarioService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Slf4j
 public class IndexController {
-    
-    
 
     @RequestMapping("/")
     public String page(Model model) {
         return "index";
     }
-    
+
 }

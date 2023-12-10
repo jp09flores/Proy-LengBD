@@ -1,6 +1,7 @@
 package com.Proyecto.service.impl;
 
 import com.Proyecto.dao.TipoTrabajoDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.TipoTrabajo;
 import com.Proyecto.service.TipoTrabajoService;
 import jakarta.persistence.EntityManager;
@@ -65,11 +66,12 @@ public class TipoTrabajoServiceImpl implements TipoTrabajoService {
 
         query.execute();
     }
-     private final SimpleJdbcCall jdbcCall;
+    private final SimpleJdbcCall jdbcCall;
 
     @Autowired
     public TipoTrabajoServiceImpl(DataSource dataSource) {
         this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_TIPO_TRABAJO_ULTIMO")
                 .withFunctionName("obtener_lastjob")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -123,7 +125,7 @@ public class TipoTrabajoServiceImpl implements TipoTrabajoService {
 
         query.execute();
     }
-    
+
     @Override
     @Transactional
     public Long obtenerUltimoTipoTrabajo() {
@@ -132,6 +134,25 @@ public class TipoTrabajoServiceImpl implements TipoTrabajoService {
 
         query.execute();
 
-        return (Long) query.getOutputParameterValue("p_id_tipo_trabajo")+1;
+        return (Long) query.getOutputParameterValue("p_id_tipo_trabajo") + 1;
+    }
+
+    @Override
+    public Cursores Cursor(char letraInicial) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_TRABAJO_POR_NOMBRE")
+                .registerStoredProcedureParameter("p_letra_inicial", char.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("v_id_tipo_trabajo", int.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("v_nombre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("v_requisitos", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("v_contenido", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_output", String.class, ParameterMode.OUT)
+                .setParameter("p_letra_inicial", letraInicial);
+        query.execute();
+        String output = (String) query.getOutputParameterValue("p_output");
+
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
     }
 }

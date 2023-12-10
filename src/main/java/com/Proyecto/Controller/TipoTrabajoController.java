@@ -1,7 +1,7 @@
-
 package com.Proyecto.Controller;
 
 import com.Proyecto.dao.vTiposTrabajosDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.TipoTrabajo;
 import com.Proyecto.domain.vTiposTrabajos;
 import com.Proyecto.service.TipoTrabajoService;
@@ -20,22 +20,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/tipoTrabajo")
 @Slf4j
 public class TipoTrabajoController {
-    
+
     @Autowired
     private TipoTrabajoService tipoTrabajoService;
-       @Autowired
+    @Autowired
     private vTiposTrabajosDao vtipostrabajosdao;
+
     @GetMapping("/listado")
     public String listado(Model model) {
         List<TipoTrabajo> tipoTrabajos = tipoTrabajoService.getTiposTrabajos();
         model.addAttribute("tipo_trabajos", tipoTrabajos);
         String ultimoTrabajo = tipoTrabajoService.obtenerUltimoTrabajo();
-         model.addAttribute("ultimoTrabajo", ultimoTrabajo);
-         List<vTiposTrabajos> vTiposTrabajos = vtipostrabajosdao.findAll();
+        model.addAttribute("ultimoTrabajo", ultimoTrabajo);
+        List<vTiposTrabajos> vTiposTrabajos = vtipostrabajosdao.findAll();
         model.addAttribute("vTiposTrabajos", vTiposTrabajos);
         return "tipoTrabajo/listado";
     }
-    
+
     @GetMapping("/modificar/{id}")
     public String obtenerTipoTrabajo(@PathVariable Long id, Model model) {
         TipoTrabajo tipoTrabajo = tipoTrabajoService.seleccionarTipoTrabajo(id);
@@ -44,10 +45,10 @@ public class TipoTrabajoController {
         model.addAttribute("tipo_Trabajo_id", tipo_Trabajo_id);
         return "tipoTrabajo/modificar";
     }
-    
-     @PostMapping("/actualizar")
+
+    @PostMapping("/actualizar")
     public String actualizarTipoTrabajo(
-            @RequestParam  Long idTipoTrabajo,
+            @RequestParam Long idTipoTrabajo,
             @RequestParam String nombre,
             @RequestParam String requisitos,
             @RequestParam String contenido,
@@ -55,21 +56,30 @@ public class TipoTrabajoController {
         tipoTrabajoService.actualizarTipoTrabajo(idTipoTrabajo, nombre, requisitos, contenido, detalles);
         return "redirect:/tipoTrabajo/listado";
     }
+
     @GetMapping("/eliminar/{id}")
     public String eliminarTipoTrabajo(@PathVariable Long id) {
         tipoTrabajoService.eliminarTipoTrabajo(id);
-         return "redirect:/tipoTrabajo/listado";
+        return "redirect:/tipoTrabajo/listado";
     }
-    
+
     @GetMapping("/agregar")
     public String agregar(Model model) {
-       Long id = tipoTrabajoService.obtenerUltimoTipoTrabajo();
-       model.addAttribute("idUltimoTtrabajo", id);
+        Long id = tipoTrabajoService.obtenerUltimoTipoTrabajo();
+        model.addAttribute("idUltimoTtrabajo", id);
         return "tipoTrabajo/agregar";
     }
+
     @PostMapping("/guardar")
     public String guardar(@RequestParam Long idTipoTrabajo, @RequestParam String nombre, @RequestParam String requisitos, @RequestParam String contenido, @RequestParam String detalles) {
         tipoTrabajoService.insertarTipoTrabajo(idTipoTrabajo, nombre, requisitos, contenido, detalles);
         return "redirect:/tipoTrabajo/listado";
+    }
+
+    @GetMapping("/cursor/{inicial}")
+    public String obtenerProveedorCursor(@PathVariable String inicial, Model model) {
+        Cursores cursores = tipoTrabajoService.Cursor(inicial.charAt(0));
+        model.addAttribute("cursor", cursores.getOutput());
+        return "clientes/cursor";
     }
 }

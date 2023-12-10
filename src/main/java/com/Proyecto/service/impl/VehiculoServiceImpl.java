@@ -1,6 +1,7 @@
 package com.Proyecto.service.impl;
 
 import com.Proyecto.dao.VehiculoDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Vehiculo;
 import com.Proyecto.service.VehiculoService;
 import jakarta.persistence.EntityManager;
@@ -133,5 +134,25 @@ public class VehiculoServiceImpl implements VehiculoService {
                 .setParameter("p_year", year);
 
         query.execute();
+    }
+    @Override
+    public Cursores Cursor(char placa) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_VEHICULOS_POR_PLACA")
+                .registerStoredProcedureParameter("p_inicio_placa", char.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_num_motor", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_marca", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_color", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_modelo", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_ano", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_output", String.class, ParameterMode.OUT)
+                .setParameter("p_inicio_placa", placa);
+        query.execute();
+       String output = (String) query.getOutputParameterValue("p_output");
+
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
     }
 }

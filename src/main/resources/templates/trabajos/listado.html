@@ -57,6 +57,7 @@
                                                    class="btn btn-danger">
                                                     <i class='fas fa-trash'></i> Eliminar
                                                 </a>
+                                                 
                                             </td>
                                         </tr>
                                     </tbody>
@@ -74,7 +75,7 @@
                   <section class="my-5">
         <div class="container">
             <div style="display: flex">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>Vista de los Trabajos</h4>
@@ -88,8 +89,9 @@
                                         <th>Fecha</th>
                                         <th>Cliente</th>
                                         <th>Vehiculo</th>
-                                        <th>Cantiadd de Productos</th>
+                                        <th>Cantidad de Productos</th>
                                         <th>Empleado</th>
+                                        <th></th>
                                         
                                     </tr>
                                 </thead>
@@ -98,12 +100,17 @@
                                        
                                         <td>[[${vTra.idTrabajos}]]</td>
                                         <td>[[${vTra.tipoTrabajo}]]</td>
-                                        
+                                        <td>[[${vTra.fecha}]]</td>
                                         <td>[[${vTra.cliente}]]</td>
                                         <td>[[${vTra.vehiculo}]]</td>
                                         <td>[[${vTra.cantidadProductos}]]</td>
                                         <td>[[${vTra.empleado}]]</td>
-                                        <td><p>ARREGLAR</p></td>
+                                         <td>
+                                                 <a th:href="@{/trabajos/cursor/}+${vTra.empleado}"
+                                                   class="btn btn-warning">
+                                                    <i class="fa-solid fa-database"></i> Cursor
+                                                </a>
+                                            </td>
                                     </tr>
                                 </tbody>
                             </table>

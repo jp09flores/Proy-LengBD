@@ -6,6 +6,7 @@ package com.Proyecto.service.impl;
 
 import com.Proyecto.service.EmpleadosService;
 import com.Proyecto.dao.EmpleadosDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Empleados;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
@@ -85,6 +86,7 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
     @Autowired
     public EmpleadosServiceImpl(DataSource dataSource) {
         this.eliminarEmpleadoJdbcCall = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_EMPLEADOS")
                 .withFunctionName("F_eliminar_empleado")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -93,6 +95,7 @@ public Empleados SeleccionarEmpleado(Long idEmpleado) {
                 );
 
         this.salarioPromedioJdbcCall = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_EMPLEADOS_SALARIO")
                 .withFunctionName("f_csalario")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -219,6 +222,40 @@ public Long ObtenerUltimoEmpleado() {
     return (Long) query.getOutputParameterValue("p_id_empleado") + 1;
 }
 
+@Override
+    public Cursores Cursor() {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("MOSTRAR_EMPLEADOS_CON_E")
+                .registerStoredProcedureParameter("e_id_empleado", Long.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_nombre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_output", String.class, ParameterMode.OUT);
+        query.execute();
+       String output = (String) query.getOutputParameterValue("e_output");
 
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
+    }
+    
+    
+    @Override
+    public Cursores Cursor2() {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_EMPLEADO_CON_SALARIO_MAYOR")
+                .registerStoredProcedureParameter("e_id_empleado", Long.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_nombre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_apellido", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_num_telefono", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_correo_elect", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_salario", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_fecha_ingre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("e_output", String.class, ParameterMode.OUT);
+        query.execute();
+       String output = (String) query.getOutputParameterValue("e_output");
+
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
+    }
 
 }

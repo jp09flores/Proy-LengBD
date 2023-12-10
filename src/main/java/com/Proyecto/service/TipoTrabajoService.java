@@ -1,5 +1,6 @@
 package com.Proyecto.service;
 
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.TipoTrabajo;
 import java.util.List;
 
@@ -29,4 +30,5 @@ public interface TipoTrabajoService {
     
     
      public String obtenerUltimoTrabajo();
+     public Cursores Cursor(char letraInicial);
 }

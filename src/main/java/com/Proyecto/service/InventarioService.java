@@ -4,6 +4,7 @@
  */
 package com.Proyecto.service;
 
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Inventario;
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface InventarioService {
 
     Long obtenerUltimoProducto();
     public String obtenerProductoMasAntiguo();
+    
+    public Cursores Cursor(int idProducto);
 }

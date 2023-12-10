@@ -2,6 +2,7 @@ package com.Proyecto.service.impl;
 
 import com.Proyecto.dao.ClienteDao;
 import com.Proyecto.domain.Cliente;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.service.ClienteService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
@@ -72,6 +73,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     public ClienteServiceImpl(DataSource dataSource) {
         this.clientesEliminarFuncion = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_CLIENTES")
                 .withFunctionName("F_eliminar_cliente")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -79,6 +81,7 @@ public class ClienteServiceImpl implements ClienteService {
                         new SqlParameter("p_id_cliente", Types.INTEGER)
                 );
          this.clienteFuncion = new SimpleJdbcCall(dataSource)
+                 .withCatalogName("PKG_CLIENTES_CANTIDAD")
                 .withFunctionName("t_clientes")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -184,6 +187,26 @@ public class ClienteServiceImpl implements ClienteService {
         query.execute();
 
         return (Long) query.getOutputParameterValue("p_id_cliente")+1;
+    }
+    
+    @Override
+    public Cursores Cursor(String username) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_CLIENTE_POR_USERNAME")
+                .registerStoredProcedureParameter("c_username", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("c_nombre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("c_apellido", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("c_direccion", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("c_num_telefono", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("c_correo_elect", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_output", String.class, ParameterMode.OUT)
+         .setParameter("c_username", username);
+        query.execute();
+       String output = (String) query.getOutputParameterValue("p_output");
+
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
     }
 }  
 

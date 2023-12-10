@@ -1,7 +1,7 @@
-
 package com.Proyecto.Controller;
 
 import com.Proyecto.dao.vVehiculoDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Vehiculo;
 import com.Proyecto.domain.vVehiculos;
 import com.Proyecto.service.VehiculoService;
@@ -16,18 +16,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 @RequestMapping("/vehiculo")
 @Slf4j
 public class VehiculoController {
-    
+
     @Autowired
     private VehiculoService VehiculoService;
-    
+
     @Autowired
     private vVehiculoDao vVehiculoDao;
-    
+
     @GetMapping("/listado")
     public String listado(Model model) {
         List<Vehiculo> vehiculos = VehiculoService.getTiposVehiculos();
@@ -36,7 +35,7 @@ public class VehiculoController {
         model.addAttribute("vVehiculos", vVehiculos);
         return "vehiculo/listado";
     }
-    
+
     @GetMapping("/modificar/{placa}")
     public String obtenerVehiculo(@PathVariable String placa, Model model) {
         Vehiculo vehiculo = VehiculoService.seleccionarVehiculo(placa);
@@ -45,28 +44,35 @@ public class VehiculoController {
         model.addAttribute("vehiculo_id", vehiculo_id);
         return "vehiculo/modificar";
     }
-    
+
     @PostMapping("/actualizar")
     public String actualizarVehiculo(@RequestParam String numPlaca, @RequestParam String numMotor, @RequestParam String marca, @RequestParam String color, @RequestParam String modelo, @RequestParam String year) {
         VehiculoService.actualizarVehiculo(numPlaca, numMotor, marca, color, modelo, year);
         return "redirect:/vehiculo/listado";
     }
+
     @GetMapping("/eliminar/{placa}")
     public String eliminarVehiculo(@PathVariable String placa) {
         VehiculoService.eliminarVehiculo(placa);
-         return "redirect:/vehiculo/listado";
+        return "redirect:/vehiculo/listado";
     }
-    
+
     @GetMapping("/agregar")
     public String agregar(Model model) {
         return "vehiculo/agregar";
     }
-    
+
     @PostMapping("/guardar")
     public String guardar(@RequestParam String numPlaca, @RequestParam String numMotor, @RequestParam String marca, @RequestParam String color, @RequestParam String modelo, @RequestParam String year) {
         VehiculoService.insertarVehiculo(numPlaca, numMotor, marca, color, modelo, year);
         return "redirect:/vehiculo/listado";
     }
-    
-    
+
+    @GetMapping("/cursor/{placa}")
+    public String obtenerProveedorCursor(@PathVariable String placa, Model model) {
+        Cursores cursores = VehiculoService.Cursor(placa.charAt(0));
+        model.addAttribute("proveedorDetails", cursores.getOutput());
+        return "proveedores/cursor";
+    }
+
 }

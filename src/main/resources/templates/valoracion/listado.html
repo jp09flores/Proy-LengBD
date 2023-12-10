@@ -41,10 +41,10 @@
 
                                             <td>[[${valoracion.idCliente}]]</td>
                                             <td>[[${valoracion.comentario}]]</td>
-                                            
+
                                             <td>[[${valoracion.valoracion}]]</td>
                                             <td>[[${valoracion.fechaEmi}]]</td>
-                                            
+
                                             <td>
                                                 <a th:href="@{/valoracion/modificar/}+${valoracion.idValoracion}"
                                                    class="btn btn-success">
@@ -68,42 +68,91 @@
                 </div>
             </div>
         </section>
-                  <section class="my-5">
-        <div class="container">
-            <div style="display: flex">
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Vista Vehiculos</h4>
+        <section class="my-5">
+            <div class="container">
+                <div style="display: flex">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Vista Valoracion 1 </h4>
+                            </div>
+                            <div th:if="${vValoracion != null and !vValoracion.empty}">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Id del cliente</th>
+                                            <th>Id del Empleado</th>
+                                            <th>Comentario Fecha</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="vValoraciones, contador : ${vValoracion}">
+
+                                            <td>[[${vValoraciones.idValoracion}]]</td>
+                                            <td>[[${vValoraciones.idCliente}]]</td>
+                                            <td>[[${vValoraciones.comentario}]]</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-                        <div th:if="${vValoracion != null and !vValoracion.empty}">
-                            <table class="table table-striped table-hover">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Id del cliente</th>
-                                        <th>Id del Empleado</th>
-                                        <th>Comentario Fecha</th>
-                                      
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="vValoraciones, contador : ${vValoracion}">
-                                   
-                                        <td>[[${vValoraciones.idValoracion}]]</td>
-                                        <td>[[${vValoraciones.idCliente}]]</td>
-                                        <td>[[${vValoraciones.comentario}]]</td>
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
+        </section> 
+        <section class="my-5">
+            <div class="container">
+                <div style="display: flex">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Vista Valoracion 2 </h4>
+                            </div>
+                            <div th:if="${vValoraciones2 != null and !vValoraciones2.empty}">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Id Valoracion</th>
+                                            <th>Cliente</th>
+                                             <th>Comentario</th>
+                                              <th>Valoracion </th>
+                                               <th>Fecha</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="vValoracion2, contador : ${vValoraciones2}">
+
+                                            <td>[[${vValoracion2.idValoracion}]]</td>
+                                            <td>[[${vValoracion2.cliente}]]</td>
+                                            <td>[[${vValoracion2.valoComentario}]]</td>
+                                            <td>[[${vValoracion2.valoValoracion}]]</td>
+                                            <td>[[${vValoracion2.fecha}]]</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> 
+         <div class="container my-5">
+        <div class="card">
+            <div class="card-header">
+                <h2>Cursor</h2>
+            </div>
+            <div class="card-body">
+                <div th:utext="${cursor}"></div>
+            </div>
         </div>
-    </section> 
+    </div>
         <footer th:replace="~{layout/plantilla :: footer}"></footer>
     </body>
 </html>

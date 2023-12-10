@@ -11,6 +11,7 @@ package com.Proyecto.service.impl;
 
 
 import com.Proyecto.dao.ValoracionDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Valoracion;
 import com.Proyecto.service.ValoracionService;
 import jakarta.persistence.EntityManager;
@@ -77,6 +78,7 @@ public class ValoracionServiceImpl  implements ValoracionService{
     @Autowired
     public ValoracionServiceImpl(DataSource dataSource) {
         this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_VALORACIONES")
                 .withFunctionName("F_eliminar_valoracion")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -144,5 +146,20 @@ public class ValoracionServiceImpl  implements ValoracionService{
 
         return idUltimaValoracion+1;
     }
+ @Override
+    public Cursores Cursor() {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_VALORACIONES_MAYOR_A_3")
+                .registerStoredProcedureParameter("v_id_cliente", int.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("v_comentario", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("v_valoracion", int.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("v_fecha_emision", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("v_output", String.class, ParameterMode.OUT);
+        query.execute();
+       String output = (String) query.getOutputParameterValue("v_output");
 
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
+    }
 }

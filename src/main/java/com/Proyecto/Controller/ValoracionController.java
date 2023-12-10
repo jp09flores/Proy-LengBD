@@ -5,9 +5,12 @@
 package com.Proyecto.Controller;
 
 import com.Proyecto.dao.vValoracionDao;
+import com.Proyecto.dao.vValoracionesDao;
 import com.Proyecto.domain.Cliente;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Valoracion;
 import com.Proyecto.domain.vValoracion;
+import com.Proyecto.domain.vValoraciones;
 import com.Proyecto.service.ClienteService;
 import com.Proyecto.service.ValoracionService;
 import java.util.List;
@@ -29,56 +32,65 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/valoracion")
 @Slf4j
 public class ValoracionController {
+
     @Autowired
     private ClienteService clienteService;
     @Autowired
     private ValoracionService valoracionService;
     @Autowired
     private vValoracionDao vvaloraciondao;
-   @GetMapping("/listado")
+    @Autowired
+    private vValoracionesDao vValoracionesDao;
+
+    @GetMapping("/listado")
     public String listado(Model model) {
         List<Valoracion> valoracion = valoracionService.getValoraciones();
         model.addAttribute("valoraciones", valoracion);
-         List<vValoracion> vValoracion = vvaloraciondao.findAll();
+        List<vValoracion> vValoracion = vvaloraciondao.findAll();
         model.addAttribute("vValoracion", vValoracion);
+        List<vValoraciones> vValoraciones = vValoracionesDao.findAll();
+        model.addAttribute("vValoraciones2", vValoraciones);
+        Cursores cursores = valoracionService.Cursor();
+        model.addAttribute("cursor", cursores.getOutput());
         return "valoracion/listado";
     }
-    
+
     @GetMapping("/modificar/{id}")
     public String obtenerValoracion(@PathVariable Long id, Model model) {
         Valoracion valoracion = valoracionService.seleccionarValoracion(id);
         Long valoracion_id = id;
         model.addAttribute("valoracion", valoracion);
         model.addAttribute("valoracion_id", valoracion_id);
-         List<Cliente> clientes = clienteService.getClientes();
+        List<Cliente> clientes = clienteService.getClientes();
         model.addAttribute("clientes", clientes);
         return "valoracion/modificar";
     }
-    
+
     @PostMapping("/actualizar")
-   public String actualizarValoracion(@RequestParam Long idValoracion, @RequestParam Long idCliente, @RequestParam String comentario, @RequestParam Integer valoracion, @RequestParam String fechaEmi) {
+    public String actualizarValoracion(@RequestParam Long idValoracion, @RequestParam Long idCliente, @RequestParam String comentario, @RequestParam Integer valoracion, @RequestParam String fechaEmi) {
         valoracionService.actualizarValoracion(idValoracion, idCliente, comentario, valoracion, fechaEmi);
         return "redirect:/valoracion/listado";
     }
+
     @GetMapping("/eliminar/{id}")
     public String eliminarValoracion(@PathVariable Long id) {
         valoracionService.eliminarValoracion(id);
-         return "redirect:/valoracion/listado";
+        return "redirect:/valoracion/listado";
     }
-    
-    
-     @GetMapping("/agregar")
+
+    @GetMapping("/agregar")
     public String agregar(Model model) {
-          List<Cliente> clientes = clienteService.getClientes();
+        List<Cliente> clientes = clienteService.getClientes();
         model.addAttribute("clientes", clientes);
-       Long id = valoracionService.obtenerUltimaValoracion();
-       model.addAttribute("idUltimoValoracion", id);
+        Long id = valoracionService.obtenerUltimaValoracion();
+        model.addAttribute("idUltimoValoracion", id);
         return "valoracion/agregar";
     }
+
     @PostMapping("/guardar")
-  public String guardar(@RequestParam Long idValoracion, @RequestParam Long idCliente, @RequestParam String comentario, @RequestParam Integer valoracion, @RequestParam String fechaEmi) {
+    public String guardar(@RequestParam Long idValoracion, @RequestParam Long idCliente, @RequestParam String comentario, @RequestParam Integer valoracion, @RequestParam String fechaEmi) {
         valoracionService.insertarValoracion(idValoracion, idCliente, comentario, valoracion, fechaEmi);
         return "redirect:/valoracion/listado";
     }
-    
+
 }

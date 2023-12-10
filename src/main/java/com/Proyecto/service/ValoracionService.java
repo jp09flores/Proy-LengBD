@@ -4,6 +4,7 @@
  */
 package com.Proyecto.service;
 
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Valoracion;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface ValoracionService {
     void insertarValoracion(Long idValoracion, Long idCliente, String comentario, Integer valoracion, String fechaEmi);
 
     Long obtenerUltimaValoracion();
+    
+    public Cursores Cursor();
 }

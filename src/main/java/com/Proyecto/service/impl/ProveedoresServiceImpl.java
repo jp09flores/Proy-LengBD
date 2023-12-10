@@ -78,6 +78,7 @@ public class ProveedoresServiceImpl implements ProveedoresService {
      @Autowired
     public ProveedoresServiceImpl(DataSource dataSource) {
         this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_PROVEEDORES")
                 .withFunctionName("F_eliminar_proveedor")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(

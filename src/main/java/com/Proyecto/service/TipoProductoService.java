@@ -4,6 +4,7 @@
  */
 package com.Proyecto.service;
 
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.TipoProducto;
 import java.util.List;
 
@@ -19,4 +20,5 @@ public int eliminarTipoProducto(Long IdTipoProducto);
 public void actualizarProductos(Long IdTipoProducto, String nombre,   String detalles);
 public void insertarProductos(Long IdTipoProducto, String nombre,   String detalles);
 public Long ObtenerUltimoProducto();  
+public Cursores Cursor();
 }

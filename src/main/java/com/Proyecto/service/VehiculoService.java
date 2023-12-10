@@ -1,5 +1,6 @@
 package com.Proyecto.service;
 
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Vehiculo;
 import java.util.List;
 
@@ -26,4 +27,5 @@ public interface VehiculoService {
             String color,
             String modelo,
             String year);
+    public Cursores Cursor(char placa);
 }

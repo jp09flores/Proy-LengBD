@@ -3,7 +3,9 @@ package com.Proyecto;
 
 import com.Proyecto.domain.Empleados;
 import com.Proyecto.domain.vClientes;
+import com.Proyecto.domain.vEmpleados;
 import com.Proyecto.domain.vValoracion;
+import com.Proyecto.domain.vValoraciones;
 import com.Proyecto.domain.vVehiculos;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
-public class ProyectoApplication implements CommandLineRunner {
+public class ProyectoApplication implements CommandLineRunner/**/ {
 
    
     @Autowired
@@ -24,18 +26,28 @@ public class ProyectoApplication implements CommandLineRunner {
      public static void main(String[] args) {
         SpringApplication.run(ProyectoApplication.class, args);
     }
- 
-    
-      @Override
+  @Override
     public void run(String... args) throws Exception {
 
-        String sql = "SELECT * FROM VISTA_VALORACIONES_BASICA " ;
+        String sql = "SELECT * FROM VISTA_VALORACIONES " ;
          
-        List<vValoracion> students = jdbcTemplate.query(sql,
-               BeanPropertyRowMapper.newInstance(vValoracion.class));
+        List<vValoraciones> students = jdbcTemplate.query(sql,
+               BeanPropertyRowMapper.newInstance(vValoraciones.class));
          
         students.forEach(System.out :: println);
     }
+    /*
+    
+     
+     
+     */
+     
+     
+      
+     
+    
+    
+    
      
      
     

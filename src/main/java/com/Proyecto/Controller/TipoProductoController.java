@@ -1,4 +1,6 @@
 package com.Proyecto.Controller;
+
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.TipoProducto;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,8 @@ public class TipoProductoController {
     public String listado(Model model) {
         List<TipoProducto> tipoProductos = productoService.getProductos();
         model.addAttribute("tipoProductos", tipoProductos);
+        Cursores cursores = productoService.Cursor();
+        model.addAttribute("cursor", cursores.getOutput());
         return "tipoProducto/listado";
     }
 
@@ -43,8 +47,8 @@ public class TipoProductoController {
 
     @PostMapping("/actualizar")
     public String actualizarProducto(@RequestParam Long IdTipoProducto, @RequestParam String nombre,
-         @RequestParam String detalles) {
-        productoService.actualizarProductos(IdTipoProducto,nombre, detalles);
+            @RequestParam String detalles) {
+        productoService.actualizarProductos(IdTipoProducto, nombre, detalles);
         return "redirect:/tipoProducto/listado";
     }
 
@@ -63,7 +67,7 @@ public class TipoProductoController {
 
     @PostMapping("/guardar")
     public String guardar(@RequestParam Long IdTipoProducto, @RequestParam String nombre,
-        @RequestParam String detalles) {
+            @RequestParam String detalles) {
         productoService.insertarProductos(IdTipoProducto, nombre, detalles);
         return "redirect:/tipoProducto/listado";
     }

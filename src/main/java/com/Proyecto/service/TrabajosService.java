@@ -1,5 +1,6 @@
 package com.Proyecto.service;
 
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Trabajos;
 import java.util.Date;
 import java.util.List;
@@ -20,5 +21,7 @@ public interface TrabajosService {
     Long obtenerUltimoTrabajo();
     
     public String obtenerUltimaFecha();
+    
+    public Cursores Cursor(String nombre);
 
 }

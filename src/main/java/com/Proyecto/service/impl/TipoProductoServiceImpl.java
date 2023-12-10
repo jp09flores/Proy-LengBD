@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.Proyecto.dao.TipoProductoDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.service.TipoProductoService;
 import java.sql.Types;
 import java.util.Map;
@@ -55,6 +56,7 @@ public class TipoProductoServiceImpl implements TipoProductoService {
     @Autowired
     public TipoProductoServiceImpl(DataSource dataSource) {
         this.jdbcCall = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_TIPO_PRODUCTO")
                 .withFunctionName("F_eliminar_tipo_producto")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -122,5 +124,21 @@ public class TipoProductoServiceImpl implements TipoProductoService {
         List<TipoProducto> productos = productosDao.findAll();
         return productos;
     }
+    
+    
+    @Override
+    public Cursores Cursor() {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("c_RECUPERAR_TIPOS_PRODUCTO")
+                .registerStoredProcedureParameter("p_id_tipo_producto", Long.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_detalle", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_output", String.class, ParameterMode.OUT);
+        query.execute();
+       String output = (String) query.getOutputParameterValue("p_output");
 
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
+    }
 }

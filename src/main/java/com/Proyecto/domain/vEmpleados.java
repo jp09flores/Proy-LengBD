@@ -18,4 +18,5 @@ public class vEmpleados implements Serializable{
     private String nombre;
     private String apellido;
     private double salario;
+    private String fechaIngre;
 }

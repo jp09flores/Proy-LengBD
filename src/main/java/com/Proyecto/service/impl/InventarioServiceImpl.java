@@ -5,6 +5,7 @@
 package com.Proyecto.service.impl;
 
 import com.Proyecto.dao.InventarioDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Inventario;
 import com.Proyecto.service.InventarioService;
 import jakarta.persistence.EntityManager;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.sql.Types;
+import java.util.Date;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.SqlOutParameter;
@@ -76,6 +78,7 @@ public class InventarioServiceImpl implements InventarioService {
     @Autowired
     public InventarioServiceImpl(DataSource dataSource) {
         this.eliminarFuncion = new SimpleJdbcCall(dataSource)
+                .withCatalogName("PKG_PRODUCTOS")
                 .withFunctionName("F_eliminar_producto")
                 .withoutProcedureColumnMetaDataAccess()
                 .declareParameters(
@@ -165,6 +168,27 @@ public class InventarioServiceImpl implements InventarioService {
         query.execute();
 
         return (Long) query.getOutputParameterValue("p_id_producto") + 1;
+    }
+    
+    
+     @Override
+    public Cursores Cursor(int idProducto) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_PRODUCTO_POR_ID_Y_STOCK")
+                .registerStoredProcedureParameter("p_id_producto", int.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_id_tipo_producto", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_fecha_ingreso", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_stock", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_detalles", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_output", String.class, ParameterMode.OUT)
+                 .setParameter("p_id_producto", idProducto);
+        query.execute();
+       String output = (String) query.getOutputParameterValue("p_output");
+
+        Cursores cursores = new Cursores();
+        cursores.setOutput(output);
+
+        return cursores;
     }
 
 }

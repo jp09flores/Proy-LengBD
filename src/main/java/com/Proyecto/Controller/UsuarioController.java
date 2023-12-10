@@ -4,7 +4,6 @@
  */
 package com.Proyecto.Controller;
 
-
 import com.Proyecto.domain.Usuario;
 import com.Proyecto.service.UsuarioService;
 import java.util.List;
@@ -26,19 +25,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/usuario")
 @Slf4j
 public class UsuarioController {
-    
-    
-    
+
     @Autowired
     private UsuarioService usuarioService;
-    
-   @GetMapping("/listado")
+
+    @GetMapping("/listado")
     public String listado(Model model) {
         List<Usuario> usuarios = usuarioService.getUsuarios();
         model.addAttribute("usuarios", usuarios);
         return "usuario/listado";
     }
-    
+
     @GetMapping("/modificar/{id}")
     public String obtenerUsuario(@PathVariable Long id, Model model) {
         Usuario usuario = usuarioService.seleccionarUsuario(id);
@@ -47,25 +44,26 @@ public class UsuarioController {
         model.addAttribute("usuario_id", usuario_id);
         return "usuario/modificar";
     }
-    
+
     @PostMapping("/actualizar")
     public String actualizarUsuario(@RequestParam Long id, @RequestParam String nombre, @RequestParam String correo) {
         usuarioService.actualizarUsuario(id, nombre, correo);
         return "redirect:/usuario/listado";
     }
+
     @GetMapping("/eliminar/{id}")
     public String eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
-         return "redirect:/usuario/listado";
+        return "redirect:/usuario/listado";
     }
-    
-    
-     @GetMapping("/agregar")
+
+    @GetMapping("/agregar")
     public String agregar(Model model) {
-       Long id = usuarioService.obtenerUltimoUsuario();
-       model.addAttribute("idUltimoUsuario", id);
+        Long id = usuarioService.obtenerUltimoUsuario();
+        model.addAttribute("idUltimoUsuario", id);
         return "usuario/agregar";
     }
+
     @PostMapping("/guardar")
     public String guardar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String correo) {
         usuarioService.insertarUsuario(id, nombre, correo);

@@ -74,57 +74,80 @@
                 </div>
             </div>
         </section>
-         <section class="my-5">
-        <div class="container">
-            <div style="display: flex">
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Vista Empleados</h4>
-                        </div>
-                        <div th:if="${vEmpleados != null and !vEmpleados.empty}">
-                            <table class="table table-striped table-hover">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Id del Empleado</th>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Salario</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="vEmpleado, contador : ${vEmpleados}">
-                               
-                                        <td>[[${vEmpleado.idEmpleado}]]</td>
-                                        <td>[[${vEmpleado.nombre}]]</td>
-                                        <td>[[${vEmpleado.apellido}]]</td>
-                                        <td>[[${vEmpleado.salario}]]</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="text-center p-2" th:if="${vEmpleados == null or vEmpleados.empty}">
-                            <span>LISTA VACIA</span>
+        <section class="my-5">
+            <div class="container">
+                <div style="display: flex">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Vista Empleados</h4>
+                            </div>
+                            <div th:if="${vEmpleados != null and !vEmpleados.empty}">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Id del Empleado</th>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>Salario</th>
+                                            <th>Fecha Ingreso</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="vEmpleado, contador : ${vEmpleados}">
+
+                                            <td>[[${vEmpleado.idEmpleado}]]</td>
+                                            <td>[[${vEmpleado.nombre}]]</td>
+                                            <td>[[${vEmpleado.apellido}]]</td>
+                                            <td>[[${vEmpleado.salario}]]</td>
+                                            <td>[[${vEmpleado.fechaIngre}]]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${vEmpleados == null or vEmpleados.empty}">
+                                <span>LISTA VACIA</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section> 
-        
-        
+        </section> 
+
+
         <div class="container my-5">
             <div class="card">
                 <div class="card-header">
                     <h1>Salario Promedio</h1>
                 </div>
                 <div class="card-body">
-                   <p>El salario promedio de los empleados es: <span th:text="${salarioPromedio}"></span></p>
+                    <p>El salario promedio de los empleados es: <span th:text="${salarioPromedio}"></span></p>
                 </div>
             </div>
         </div>
-        
+
+        <div class="container my-5">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Cursor</h2>
+                </div>
+                <div class="card-body">
+                    <div th:utext="${cursor}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container my-5">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Cursor2: Salario Mayor a 60mil</h2>
+                </div>
+                <div class="card-body">
+                    <div th:utext="${cursor2}"></div>
+                </div>
+            </div>
+        </div>
+
         <footer th:replace="~{layout/plantilla :: footer}"></footer>
     </body>
 </html>

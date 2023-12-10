@@ -4,10 +4,13 @@
  */
 package com.Proyecto.Controller;
 
+import com.Proyecto.dao.vInventario2Dao;
 import com.Proyecto.dao.vInventarioDao;
+import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Inventario;
 import com.Proyecto.domain.TipoProducto;
 import com.Proyecto.domain.vInventario;
+import com.Proyecto.domain.vInventario2;
 import com.Proyecto.service.InventarioService;
 import com.Proyecto.service.TipoProductoService;
 
@@ -30,62 +33,75 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/inventario")
 @Slf4j
 public class InventarioController {
-    
+
     @Autowired
     private InventarioService inventarioService;
     @Autowired
     private TipoProductoService tipoProductoService;
     @Autowired
     private vInventarioDao vinventarioDao;
-   @GetMapping("/listado")
+    @Autowired
+    private vInventario2Dao vinventario2Dao;
+
+    @GetMapping("/listado")
     public String listado(Model model) {
         List<Inventario> inventario = inventarioService.getInventario();
         model.addAttribute("inventario", inventario);
-          String productoMasAntiguo = inventarioService.obtenerProductoMasAntiguo();
-         model.addAttribute("productoMasAntiguo", productoMasAntiguo); 
-          List<vInventario> vInventario = vinventarioDao.findAll();
+        String productoMasAntiguo = inventarioService.obtenerProductoMasAntiguo();
+        model.addAttribute("productoMasAntiguo", productoMasAntiguo);
+        List<vInventario> vInventario = vinventarioDao.findAll();
         model.addAttribute("vInventario", vInventario);
-          
+        List<vInventario2> vInventario2 = vinventario2Dao.findAll();
+        model.addAttribute("vInventario2", vInventario2);
+
         return "inventario/listado";
     }
-    
+
     @GetMapping("/modificar/{id}")
     public String obtenerProductoInventario(@PathVariable Long id, Model model) {
         Inventario producto = inventarioService.seleccionarProducto(id);
         Long productoid = id;
         model.addAttribute("producto", producto);
         model.addAttribute("productoid", productoid);
-         List<TipoProducto> tipoProductoLista = tipoProductoService.getProductos();
+        List<TipoProducto> tipoProductoLista = tipoProductoService.getProductos();
         model.addAttribute("tipoProductoLista", tipoProductoLista);
         return "inventario/modificar";
     }
-    
+
     @PostMapping("/actualizar")
-    public String actualizarInventario(@RequestParam Long idProducto, @RequestParam Long idTipoProducto, @RequestParam String nombre, 
+    public String actualizarInventario(@RequestParam Long idProducto, @RequestParam Long idTipoProducto, @RequestParam String nombre,
             @RequestParam String fechaIngre, @RequestParam Integer stock, @RequestParam String detalles) {
         inventarioService.actualizarProducto(idProducto, idTipoProducto, nombre, fechaIngre, stock, detalles);
         return "redirect:/inventario/listado";
     }
+
     @GetMapping("/eliminar/{id}")
     public String eliminarProducto(@PathVariable Long id) {
         inventarioService.eliminarProducto(id);
-         return "redirect:/inventario/listado";
+        return "redirect:/inventario/listado";
     }
-    
-    
-     @GetMapping("/agregar")
+
+    @GetMapping("/agregar")
     public String agregar(Model model) {
-          List<TipoProducto> tipoProductoLista = tipoProductoService.getProductos();
+        List<TipoProducto> tipoProductoLista = tipoProductoService.getProductos();
         model.addAttribute("tipoProductoLista", tipoProductoLista);
-       Long id = inventarioService.obtenerUltimoProducto();
-       model.addAttribute("idUltimoProducto", id);
+        Long id = inventarioService.obtenerUltimoProducto();
+        model.addAttribute("idUltimoProducto", id);
         return "inventario/agregar";
     }
+
     @PostMapping("/guardar")
-    public String guardar(@RequestParam Long idProducto, @RequestParam Long idTipoProducto, @RequestParam String nombre, 
+    public String guardar(@RequestParam Long idProducto, @RequestParam Long idTipoProducto, @RequestParam String nombre,
             @RequestParam String fechaIngre, @RequestParam Integer stock, @RequestParam String detalles) {
         inventarioService.insertarProducto(idProducto, idTipoProducto, nombre, fechaIngre, stock, detalles);
         return "redirect:/inventario/listado";
     }
-    
+
+    @GetMapping("/cursor/{idProducto}")
+    public String obtenerProveedorCursor(@PathVariable int idProducto, Model model) {
+        Cursores cursores = inventarioService.Cursor(idProducto);
+        model.addAttribute("cursor", cursores.getOutput());
+        return "inventario/cursor";
+    }
+
 }
