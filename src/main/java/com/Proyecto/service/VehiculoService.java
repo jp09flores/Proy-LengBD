@@ -13,6 +13,7 @@ public interface VehiculoService {
     public void actualizarVehiculo(
             String numPlaca,
             String numMotor,
+            Long idCliente,
             String marca,
             String color,
             String modelo,
@@ -23,6 +24,7 @@ public interface VehiculoService {
     public void insertarVehiculo(
             String numPlaca,
             String numMotor,
+            Long idCliente,
             String marca,
             String color,
             String modelo,

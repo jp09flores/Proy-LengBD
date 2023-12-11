@@ -1,9 +1,11 @@
 package com.Proyecto.Controller;
 
 import com.Proyecto.dao.vVehiculoDao;
+import com.Proyecto.domain.Cliente;
 import com.Proyecto.domain.Cursores;
 import com.Proyecto.domain.Vehiculo;
 import com.Proyecto.domain.vVehiculos;
+import com.Proyecto.service.ClienteService;
 import com.Proyecto.service.VehiculoService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,9 @@ public class VehiculoController {
 
     @Autowired
     private vVehiculoDao vVehiculoDao;
+    
+     @Autowired
+    private ClienteService clienteService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
@@ -42,12 +47,14 @@ public class VehiculoController {
         String vehiculo_id = placa;
         model.addAttribute("vehiculo", vehiculo);
         model.addAttribute("vehiculo_id", vehiculo_id);
+        List<Cliente> clientes = clienteService.getClientes();
+        model.addAttribute("clientes", clientes);
         return "vehiculo/modificar";
     }
 
     @PostMapping("/actualizar")
-    public String actualizarVehiculo(@RequestParam String numPlaca, @RequestParam String numMotor, @RequestParam String marca, @RequestParam String color, @RequestParam String modelo, @RequestParam String year) {
-        VehiculoService.actualizarVehiculo(numPlaca, numMotor, marca, color, modelo, year);
+    public String actualizarVehiculo(@RequestParam String numPlaca, @RequestParam String numMotor,@RequestParam Long idCliente, @RequestParam String marca, @RequestParam String color, @RequestParam String modelo, @RequestParam String year) {
+        VehiculoService.actualizarVehiculo(numPlaca, numMotor,idCliente, marca, color, modelo, year);
         return "redirect:/vehiculo/listado";
     }
 
@@ -59,12 +66,14 @@ public class VehiculoController {
 
     @GetMapping("/agregar")
     public String agregar(Model model) {
+        List<Cliente> clientes = clienteService.getClientes();
+        model.addAttribute("clientes", clientes);
         return "vehiculo/agregar";
     }
 
     @PostMapping("/guardar")
-    public String guardar(@RequestParam String numPlaca, @RequestParam String numMotor, @RequestParam String marca, @RequestParam String color, @RequestParam String modelo, @RequestParam String year) {
-        VehiculoService.insertarVehiculo(numPlaca, numMotor, marca, color, modelo, year);
+    public String guardar(@RequestParam String numPlaca, @RequestParam String numMotor,@RequestParam Long idCliente, @RequestParam String marca, @RequestParam String color, @RequestParam String modelo, @RequestParam String year) {
+        VehiculoService.insertarVehiculo(numPlaca, numMotor, idCliente, marca, color, modelo, year);
         return "redirect:/vehiculo/listado";
     }
 

@@ -38,6 +38,16 @@
                                                 <input type="text" class="form-control"  id="numMotor" 
                                                        name="numMotor" th:value="${vehiculo.numMotor}" required="true"/>
                                             </div>
+                                             <div class="mb-3">
+                                                    <label for="idCliente">Cliente</label>
+                                                    <select name="idCliente" 
+                                                            class="form-select" 
+                                                            th:field="*{vehiculo.idCliente}"
+                                                            aria-label="Default select example">
+                                                        <option th:each="c : ${clientes}" th:value="${c.idCliente}" th:text="${c.nombre}">
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             <div class="mb-3">
                                                  <label>Marca</label>
                                                 <input type="text" class="form-control"id="marca" name="marca" 

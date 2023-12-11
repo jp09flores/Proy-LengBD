@@ -39,35 +39,37 @@ public class VehiculoServiceImpl implements VehiculoService {
     @Override
     @Transactional
     public Vehiculo seleccionarVehiculo(String numPlaca) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("seleccionar_vehiculo")
+          StoredProcedureQuery query = entityManager.createStoredProcedureQuery("seleccionar_vehiculo")
                 .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_id_cliente", Long.class, ParameterMode.OUT)
                 .registerStoredProcedureParameter("p_num_motor", String.class, ParameterMode.OUT)
                 .registerStoredProcedureParameter("p_marca", String.class, ParameterMode.OUT)
                 .registerStoredProcedureParameter("p_color", String.class, ParameterMode.OUT)
                 .registerStoredProcedureParameter("p_modelo", String.class, ParameterMode.OUT)
-                .registerStoredProcedureParameter("p_year", String.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter("p_ano", String.class, ParameterMode.OUT)
                 .setParameter("p_num_placa", numPlaca);
 
         query.execute();
 
+        Long idCliente = (Long) query.getOutputParameterValue("p_id_cliente");
         String numMotor = (String) query.getOutputParameterValue("p_num_motor");
         String marca = (String) query.getOutputParameterValue("p_marca");
         String color = (String) query.getOutputParameterValue("p_color");
         String modelo = (String) query.getOutputParameterValue("p_modelo");
-        String year = (String) query.getOutputParameterValue("p_year");
+        String ano = (String) query.getOutputParameterValue("p_ano");
 
         Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setIdCliente(idCliente);
         vehiculo.setNumMotor(numMotor);
         vehiculo.setMarca(marca);
         vehiculo.setColor(color);
-        vehiculo.setNumPlaca(numPlaca);
         vehiculo.setModelo(modelo);
-        vehiculo.setAno(year);
-        
+        vehiculo.setAno(ano);
+        vehiculo.setNumPlaca(numPlaca);
+
         return vehiculo;
     }
 
-    
     private final SimpleJdbcCall jdbcCall;
 
     @Autowired
@@ -98,43 +100,47 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     @Transactional
-    public void actualizarVehiculo(String numPlaca, String numMotor, String marca, String color, String modelo, String year) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("actualizar_vehiculo")
+    public void actualizarVehiculo(String numPlaca, String numMotor, Long idCliente, String marca, String color, String modelo, String year) {
+         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("actualizar_vehiculo")
                 .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("p_num_motor", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_id_cliente", Long.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_num_motor", Long.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_marca", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_color", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_modelo", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("p_year", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_ano", String.class, ParameterMode.IN)
                 .setParameter("p_num_placa", numPlaca)
+                .setParameter("p_id_cliente", idCliente)
                 .setParameter("p_num_motor", numMotor)
                 .setParameter("p_marca", marca)
                 .setParameter("p_color", color)
                 .setParameter("p_modelo", modelo)
-                .setParameter("p_year", year);
-
-        query.execute();
+                .setParameter("p_ano", year);
+         query.execute();
     }
 
     @Override
     @Transactional
-    public void insertarVehiculo(String numPlaca, String numMotor, String marca, String color, String modelo, String year) {
+    public void insertarVehiculo(String numPlaca, String numMotor, Long idCliente, String marca, String color, String modelo, String year) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("insertar_vehiculo")
                 .registerStoredProcedureParameter("p_num_placa", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_id_cliente", Long.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_num_motor", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_marca", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_color", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("p_modelo", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("p_year", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("p_ano", String.class, ParameterMode.IN)
                 .setParameter("p_num_placa", numPlaca)
+                .setParameter("p_id_cliente", idCliente)
                 .setParameter("p_num_motor", numMotor)
                 .setParameter("p_marca", marca)
                 .setParameter("p_color", color)
                 .setParameter("p_modelo", modelo)
-                .setParameter("p_year", year);
+                .setParameter("p_ano", year);
 
         query.execute();
     }
+
     @Override
     public Cursores Cursor(char placa) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("BUSCAR_VEHICULOS_POR_PLACA")
@@ -148,11 +154,13 @@ public class VehiculoServiceImpl implements VehiculoService {
                 .registerStoredProcedureParameter("p_output", String.class, ParameterMode.OUT)
                 .setParameter("p_inicio_placa", placa);
         query.execute();
-       String output = (String) query.getOutputParameterValue("p_output");
+        String output = (String) query.getOutputParameterValue("p_output");
 
         Cursores cursores = new Cursores();
         cursores.setOutput(output);
 
         return cursores;
     }
+
+    
 }

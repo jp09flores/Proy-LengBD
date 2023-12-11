@@ -32,6 +32,7 @@
                                     <tr>
                                         <th>#id</th>
                                         <th>Número de Placa</th>
+                                        <th>Id Cliente</th>
                                         <th>Número de Motor</th>
                                         <th>Marca</th>
                                         <th>Color</th>
@@ -44,6 +45,7 @@
                                     <tr th:each="vehiculo, contador : ${vehiculos}">
                                         <td>[[${contador.count}]]</td>
                                         <td>[[${vehiculo.numPlaca}]]</td>
+                                        <td>[[${vehiculo.idCliente}]]</td>
                                         <td>[[${vehiculo.numMotor}]]</td>
                                         <td>[[${vehiculo.marca}]]</td>
                                         <td>[[${vehiculo.color}]]</td>

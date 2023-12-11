@@ -24,6 +24,7 @@ public class Vehiculo implements Serializable{
     private String color;
     private String modelo;
     private String ano;
+    private Long idCliente;
 
     public Vehiculo() {
     }

@@ -50,21 +50,21 @@
                                             <input type="hidden" class="form-control" id="fecha" name="fecha" th:value="${trabajo.fecha}"/>
                                             <div class="mb-3">
                                                 <div class="mb-3">
-                                                <label for="idCliente">Cliente</label>
-                                                <select name="idCliente" 
-                                                        class="form-select" 
-                                                        th:field="*{trabajo.idCliente}"
-                                                        aria-label="Default select example">
-                                                    <option th:each="c : ${clientes}" th:value="${c.idCliente}" th:text="${c.nombre}">
-                                                    </option>
-                                                </select>
-                                            </div>
+                                                    <label for="idCliente">Cliente</label>
+                                                    <select name="idCliente" 
+                                                            class="form-select" 
+                                                            th:field="*{trabajo.idCliente}"
+                                                            aria-label="Default select example">
+                                                        <option th:each="c : ${clientes}" th:value="${c.idCliente}" th:text="${c.nombre}">
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label>Numero Placa</label>
-                                               
+
                                                 <select name="numPlaca" 
-                                                          th:field="*{trabajo.numPlaca}"
+                                                        th:field="*{trabajo.numPlaca}"
                                                         class="form-select" 
                                                         aria-label="Default select example">
                                                     <option th:each="c : ${vehiculos}" th:value="${c.numPlaca}" th:text="${c.numPlaca}">
