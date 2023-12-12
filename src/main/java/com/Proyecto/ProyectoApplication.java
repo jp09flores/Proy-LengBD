@@ -17,7 +17,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
-public class ProyectoApplication implements CommandLineRunner/**/ {
+public class ProyectoApplication /*implements CommandLineRunner*/ {
 
    
     @Autowired
@@ -26,7 +26,9 @@ public class ProyectoApplication implements CommandLineRunner/**/ {
      public static void main(String[] args) {
         SpringApplication.run(ProyectoApplication.class, args);
     }
-  @Override
+  
+    /*
+    @Override
     public void run(String... args) throws Exception {
 
         String sql = "SELECT * FROM VISTA_VALORACIONES " ;
@@ -36,8 +38,6 @@ public class ProyectoApplication implements CommandLineRunner/**/ {
          
         students.forEach(System.out :: println);
     }
-    /*
-    
      
      
      */

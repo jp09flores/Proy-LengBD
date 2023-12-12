@@ -949,7 +949,7 @@ BEGIN
 END;
 EXECUTE c_RECUPERAR_TIPOS_PRODUCTO;
 
---2. Cursor para mostrar el nombre y la dirección de los proveedores 
+--2. Cursor para mostrar el nombre y la direcci n de los proveedores 
 CREATE OR REPLACE PROCEDURE c_seleccionar_proveedor(
     p_id_proveedor IN NUMBER,
     p_nombre OUT VARCHAR2,
@@ -973,7 +973,7 @@ BEGIN
 
     -- Procesar los datos del cursor y almacenar en p_output
     WHILE c_proveedor%FOUND LOOP
-        p_output := p_output || 'Nombre: ' || p_nombre || '<br>' ||  'Teléfono: ' || p_num_telefono || '<br>'  || ' Dirección: ' || p_direccion || '<br>'  || ' Detalles: ' || p_detalles ;
+        p_output := p_output || 'Nombre: ' || p_nombre || '<br>' ||  'Tel fono: ' || p_num_telefono || '<br>'  || ' Direcci n: ' || p_direccion || '<br>'  || ' Detalles: ' || p_detalles ;
         FETCH c_proveedor INTO p_nombre, p_num_telefono, p_direccion, p_detalles;
     END LOOP;
 
@@ -1020,8 +1020,8 @@ END;
 EXECUTE MOSTRAR_EMPLEADOS_CON_E;
 
 /*4 Cursor para buscar un cliente por su nombre de usuario. Si encuentra al menos un cliente
-con el nombre de usuario proporcionado, mostrará la información del cliente. Si no encuentra
-ningún cliente, mostrará un mensaje indicando que el cliente no existe */
+con el nombre de usuario proporcionado, mostrar  la informaci n del cliente. Si no encuentra
+ning n cliente, mostrar  un mensaje indicando que el cliente no existe */
 CREATE OR REPLACE PROCEDURE BUSCAR_CLIENTE_POR_USERNAME(
     c_username IN VARCHAR2,
     
@@ -1051,8 +1051,8 @@ BEGIN
     
     WHILE c_cliente%FOUND LOOP
         p_output := p_output || 'Nombre Completo: ' || v_nombre || ' ' || v_apellido || '<br>' || 
-        ' Dirección: ' || v_direccion || '<br>'  || ' Número de Teléfono: ' || v_num_telefono || '<br>' || 
-        ' Correo Electrónico: ' || v_correo_elect;
+        ' Direcci n: ' || v_direccion || '<br>'  || ' N mero de Tel fono: ' || v_num_telefono || '<br>' || 
+        ' Correo Electr nico: ' || v_correo_elect;
          v_cliente_encontrado := true;
         FETCH c_cliente INTO v_nombre, v_apellido, v_direccion, v_num_telefono, v_correo_elect;
     END LOOP;
@@ -1065,7 +1065,7 @@ BEGIN
 END;
 EXECUTE BUSCAR_CLIENTE_POR_USERNAME('user1');
 
---5.Cursor para buscar vehículos por placa
+--5.Cursor para buscar veh culos por placa
 CREATE OR REPLACE PROCEDURE BUSCAR_VEHICULOS_POR_PLACA(
     p_inicio_placa IN VARCHAR2,
     p_num_placa OUT VARCHAR2,
@@ -1091,10 +1091,10 @@ BEGIN
 
     -- Procesar los datos del cursor y almacenar en p_output
     WHILE c_vehiculos%FOUND LOOP
-        p_output := p_output || 'Número de Placa: ' || p_num_placa || '<br>' ||  
-        ' Número de Motor: ' || p_num_motor || '<br>'  || ' Marca: ' || p_marca || '<br>'  || 
+        p_output := p_output || 'N mero de Placa: ' || p_num_placa || '<br>' ||  
+        ' N mero de Motor: ' || p_num_motor || '<br>'  || ' Marca: ' || p_marca || '<br>'  || 
         ' Color: ' || p_color || '<br>' || ' Modelo: ' || p_modelo || '<br>'  || 
-        ' Año: ' || p_ano;
+        ' A o: ' || p_ano;
         FETCH c_vehiculos INTO p_num_placa, p_num_motor, p_marca, p_color, p_modelo, p_ano;
     END LOOP;
 
@@ -1134,7 +1134,7 @@ BEGIN
     WHILE c_valoraciones%FOUND LOOP
         v_output := v_output || 'Cliente: ' || v_cliente || '<br>'  || 
                     'Comentario: ' || v_comentario_valoracion || '<br>'  || 
-                    'Valoración: ' || v_valoracion_valoracion || '<br>'  || 
+                    'Valoraci n: ' || v_valoracion_valoracion || '<br>'  || 
                     'Fecha: ' || v_fecha_valoracion || '<br><br>';
         
         FETCH c_valoraciones INTO v_cliente, v_comentario_valoracion, v_valoracion_valoracion, v_fecha_valoracion;
@@ -1203,7 +1203,7 @@ BEGIN
     -- Procesar los datos del cursor y almacenar en p_output
     WHILE c_tipo_trabajo%FOUND LOOP
         p_output := p_output || 'ID: ' || v_id_tipo_trabajo || '<br>' ||  
-        'Nombre de la Reparación: ' || v_nombre || '<br>'  || 
+        'Nombre de la Reparaci n: ' || v_nombre || '<br>'  || 
         'Requisitos: ' || v_requisitos || '<br>'  || 
         'Contenido: ' || v_contenido;
         FETCH c_tipo_trabajo INTO v_id_tipo_trabajo, v_nombre, v_requisitos, v_contenido;
@@ -1213,7 +1213,7 @@ BEGIN
 END;
 EXECUTE BUSCAR_TRABAJO_POR_NOMBRE('R');
 
---9.obtener información de todos los empleados con salario mayor a 60000
+--9.obtener informaci n de todos los empleados con salario mayor a 60000
 CREATE OR REPLACE PROCEDURE BUSCAR_EMPLEADO_CON_SALARIO_MAYOR(
     e_id_empleado OUT NUMBER,
     e_nombre OUT VARCHAR2,
@@ -1239,8 +1239,8 @@ BEGIN
     WHILE c_empleados%FOUND LOOP
         p_output := p_output || 'ID: ' || e_id_empleado || '<br>' ||  
         'Nombre Completo: ' || e_nombre || ' ' || e_apellido || '<br>'  ||
-        'Teléfono: ' || e_num_telefono || '<br>'  || 
-        'Correo Electrónico: ' || e_correo_elect || '<br>' || 'Salario: ' || e_salario || '<br>'  || 
+        'Tel fono: ' || e_num_telefono || '<br>'  || 
+        'Correo Electr nico: ' || e_correo_elect || '<br>' || 'Salario: ' || e_salario || '<br>'  || 
         'Fecha de Ingreso: ' || e_fecha_ingre|| '<br><br>' ;
         FETCH c_empleados INTO e_id_empleado, e_nombre, e_apellido, e_num_telefono, e_correo_elect, e_salario, e_fecha_ingre;
     END LOOP;
@@ -1307,8 +1307,8 @@ BEGIN
     -- Procesar los datos del cursor y almacenar en p_output
     WHILE c_proveedor_buscar%FOUND LOOP
         p_output := p_output || 'ID: ' || p_id_proveedor || '<br>' || 
-        'Nombre: ' || p_nombre || '<br>' ||  'Teléfono: ' || p_num_telefono || '<br>'  ||
-        ' Dirección: ' || p_direccion || '<br>'  || ' Detalles: ' || p_detalles ;
+        'Nombre: ' || p_nombre || '<br>' ||  'Tel fono: ' || p_num_telefono || '<br>'  ||
+        ' Direcci n: ' || p_direccion || '<br>'  || ' Detalles: ' || p_detalles ;
         FETCH c_proveedor_buscar INTO p_id_proveedor, p_nombre, p_num_telefono, p_direccion, p_detalles;
     END LOOP;
 
@@ -1337,8 +1337,8 @@ BEGIN
 
     WHILE c_empleados_correo%FOUND LOOP
         p_output := p_output || 'Nombre Completo: ' || e_nombre || ' ' || e_apellido || '<br>'  ||
-        'Teléfono: ' || e_num_telefono || '<br>'  || 
-        'Correo Electrónico: ' || e_correo_elect || '<br>' || 'Salario: ' || e_salario || '<br>'  || 
+        'Tel fono: ' || e_num_telefono || '<br>'  || 
+        'Correo Electr nico: ' || e_correo_elect || '<br>' || 'Salario: ' || e_salario || '<br>'  || 
         'Fecha de Ingreso: ' || e_fecha_ingre;
         FETCH c_empleados_correo INTO e_nombre, e_apellido, e_num_telefono, e_correo_elect, e_salario, e_fecha_ingre;
     END LOOP;
@@ -1403,10 +1403,10 @@ BEGIN
 
     -- Procesar los datos del cursor y almacenar en p_output
     WHILE c_vehiculos_modelo%FOUND LOOP
-        p_output := p_output || 'Número de Placa: ' || p_num_placa || '<br>' || 'Cliente No. : ' || p_cliente || '<br>' ||
-        ' Número de Motor: ' || p_num_motor || '<br>'  || ' Marca: ' || p_marca || '<br>'  || 
+        p_output := p_output || 'N mero de Placa: ' || p_num_placa || '<br>' || 'Cliente No. : ' || p_cliente || '<br>' ||
+        ' N mero de Motor: ' || p_num_motor || '<br>'  || ' Marca: ' || p_marca || '<br>'  || 
         ' Color: ' || p_color || '<br>' || ' Modelo: ' || p_modelo || '<br>'  || 
-        ' Año: ' || p_ano;
+        ' A o: ' || p_ano;
         FETCH c_vehiculos_modelo INTO p_num_placa, p_cliente, p_num_motor, p_marca, p_color, p_modelo, p_ano;
     END LOOP;
 
@@ -1454,14 +1454,14 @@ EXECUTE BUSCAR_VALORACIONES_IGUALES_A_4;
 -- ============== PAQUETES Y FUNCIONES ================
 --1)
 CREATE OR REPLACE PACKAGE PKG_PROVEEDORES AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION F_eliminar_proveedor(
         p_id_proveedor IN NUMBER
     ) RETURN NUMBER;
 END PKG_PROVEEDORES;
 
 CREATE OR REPLACE PACKAGE BODY PKG_PROVEEDORES AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION F_eliminar_proveedor(
         p_id_proveedor IN NUMBER
     ) RETURN NUMBER IS
@@ -1481,14 +1481,14 @@ END PKG_PROVEEDORES;
 -- =================================================================
 -- 2)
 CREATE OR REPLACE PACKAGE PKG_TIPO_PRODUCTO AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION F_eliminar_tipo_producto(
         p_id IN NUMBER
     ) RETURN NUMBER;
 END PKG_TIPO_PRODUCTO;
 
 CREATE OR REPLACE PACKAGE BODY PKG_TIPO_PRODUCTO AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION F_eliminar_tipo_producto(
         p_id IN NUMBER
     ) RETURN NUMBER IS
@@ -1508,14 +1508,14 @@ END PKG_TIPO_PRODUCTO;
 -- =================================================================
 -- 3)
 CREATE OR REPLACE PACKAGE PKG_EMPLEADOS AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION F_eliminar_empleado(
         p_id_empleado IN NUMBER
     ) RETURN NUMBER;
 END PKG_EMPLEADOS;
 
 CREATE OR REPLACE PACKAGE BODY PKG_EMPLEADOS AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION F_eliminar_empleado(
         p_id_empleado IN NUMBER
     ) RETURN NUMBER IS
@@ -1535,14 +1535,14 @@ END PKG_EMPLEADOS;
 -- =================================================================
 -- 4)
 CREATE OR REPLACE PACKAGE PKG_VALORACIONES AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION F_eliminar_valoracion(
         p_id_valoracion IN NUMBER
     ) RETURN NUMBER;
 END PKG_VALORACIONES;
 
 CREATE OR REPLACE PACKAGE BODY PKG_VALORACIONES AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION F_eliminar_valoracion(
         p_id_valoracion IN NUMBER
     ) RETURN NUMBER IS
@@ -1562,14 +1562,14 @@ END PKG_VALORACIONES;
 -- =================================================================
 -- 5)
 CREATE OR REPLACE PACKAGE PKG_PRODUCTOS AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION F_eliminar_producto(
         p_id_producto IN NUMBER
     ) RETURN NUMBER;
 END PKG_PRODUCTOS;
 
 CREATE OR REPLACE PACKAGE BODY PKG_PRODUCTOS AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION F_eliminar_producto(
         p_id_producto IN NUMBER
     ) RETURN NUMBER IS
@@ -1589,14 +1589,14 @@ END PKG_PRODUCTOS;
 -- =================================================================
 -- 6)
 CREATE OR REPLACE PACKAGE PKG_TRABAJOS AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION F_eliminar_trabajo(
         p_id_trabajo IN NUMBER
     ) RETURN NUMBER;
 END PKG_TRABAJOS;
 
 CREATE OR REPLACE PACKAGE BODY PKG_TRABAJOS AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION F_eliminar_trabajo(
         p_id_trabajo IN NUMBER
     ) RETURN NUMBER IS
@@ -1616,14 +1616,14 @@ END PKG_TRABAJOS;
 -- =================================================================
 -- 7)
 CREATE OR REPLACE PACKAGE PKG_CLIENTES AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION F_eliminar_cliente(
         p_id_cliente IN NUMBER
     ) RETURN NUMBER;
 END PKG_CLIENTES;
 
 CREATE OR REPLACE PACKAGE BODY PKG_CLIENTES AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION F_eliminar_cliente(
         p_id_cliente IN NUMBER
     ) RETURN NUMBER IS
@@ -1643,12 +1643,12 @@ END PKG_CLIENTES;
 -- =================================================================
 -- 8)
 CREATE OR REPLACE PACKAGE PKG_EMPLEADOS_SALARIO AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION f_csalario RETURN NUMBER;
 END PKG_EMPLEADOS_SALARIO;
 
 CREATE OR REPLACE PACKAGE BODY PKG_EMPLEADOS_SALARIO AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION f_csalario RETURN NUMBER IS
         salario_promedio NUMBER;
     BEGIN
@@ -1660,13 +1660,13 @@ END PKG_EMPLEADOS_SALARIO;
 -- =================================================================
 -- 9)
 CREATE OR REPLACE PACKAGE PKG_CLIENTES_CANTIDAD AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION t_clientes RETURN NUMBER;
 END PKG_CLIENTES_CANTIDAD;
 
 
 CREATE OR REPLACE PACKAGE BODY PKG_CLIENTES_CANTIDAD AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION t_clientes RETURN NUMBER IS
         total_clientes NUMBER;
     BEGIN
@@ -1678,12 +1678,12 @@ END PKG_CLIENTES_CANTIDAD;
 -- =================================================================
 -- 10)
 CREATE OR REPLACE PACKAGE PKG_TIPO_TRABAJO_ULTIMO AS
-    -- Declaración de la función
+    -- Declaraci n de la funci n
     FUNCTION obtener_lastjob RETURN VARCHAR2;
 END PKG_TIPO_TRABAJO_ULTIMO;
 
 CREATE OR REPLACE PACKAGE BODY PKG_TIPO_TRABAJO_ULTIMO AS
-    -- Implementación de la función
+    -- Implementaci n de la funci n
     FUNCTION obtener_lastjob RETURN VARCHAR2 IS
         ultimotrabajo VARCHAR2(25);
     BEGIN
@@ -1695,6 +1695,74 @@ CREATE OR REPLACE PACKAGE BODY PKG_TIPO_TRABAJO_ULTIMO AS
         RETURN ultimotrabajo;
     END obtener_lastjob;
 END PKG_TIPO_TRABAJO_ULTIMO;
+
+
+
+--11. Eliminicacion de vehiculos
+CREATE OR REPLACE FUNCTION F_eliminar_vehiculo(
+    p_num_placa IN VARCHAR2
+)
+RETURN NUMBER
+IS
+BEGIN
+    DELETE FROM VEHICULOS
+    WHERE NUM_PLACA = p_num_placa;
+    
+    IF SQL%ROWCOUNT > 0 THEN
+        COMMIT;
+        RETURN 1;
+    ELSE
+        RETURN 0; 
+    END IF;
+END;
+
+--12. Obtener la fecha del  ltimo trabajo realizado
+CREATE OR REPLACE FUNCTION fecha_lastjob 
+RETURN varchar2 IS
+    ultima_fecha varchar2(500);
+BEGIN
+    SELECT MAX(FECHA) INTO ultima_fecha FROM TRABAJOS;
+    RETURN ultima_fecha;
+END fecha_lastjob;
+
+--13. cliente con el mayor numero de valoraciones
+CREATE OR REPLACE FUNCTION obtener_cliente_mas_valorado RETURN VARCHAR2 IS
+    c_cliente VARCHAR2(22);
+BEGIN
+    SELECT c.nombre || ' ' || c.apellido AS "Nombre Completo" INTO c_cliente
+    FROM CLIENTES c
+    JOIN VALORACIONES val ON c.ID_CLIENTE = val.ID_CLIENTE
+    GROUP BY c.ID_CLIENTE, c.nombre, c.apellido
+    ORDER BY COUNT(val.ID_CLIENTE) DESC
+    FETCH FIRST 1 ROWS ONLY;
+
+    RETURN c_cliente;
+END;
+
+--14.obtener el producto m s antiguo en inventario
+CREATE OR REPLACE FUNCTION f_oldestProduct 
+RETURN VARCHAR2 IS
+    producto_v VARCHAR2(25);
+BEGIN
+    SELECT NOMBRE INTO producto_v
+    FROM INVENTARIO
+    WHERE ROWNUM = 1
+    ORDER BY FECHA_INGRE ASC;
+
+    RETURN producto_v;
+END;
+
+
+--15. Edad promedio de los empleados
+CREATE OR REPLACE FUNCTION edad_p_emp
+RETURN NUMBER IS
+    e_promedio NUMBER;
+BEGIN
+    SELECT FLOOR(AVG(EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(FECHA_NAC, 'YY-MM-DD')))) AS "Edad Promedio" INTO e_promedio
+    FROM EMPLEADOS;
+    
+    RETURN e_promedio;
+END;
 
 -- ============================================================
 -- =================== TRIGGERS =======================
@@ -1743,7 +1811,7 @@ BEGIN
         tipo_evento := 'DELETE';
     END IF;
 
-    -- Guarda los valores antes de la operación en variables locales
+    -- Guarda los valores antes de la operaci n en variables locales
     SELECT 
         :OLD.ID_CLIENTE,
         :OLD.USERNAME,
@@ -1764,7 +1832,7 @@ BEGIN
         c_correo
     FROM DUAL;
 
-    -- Inserta en la tabla de auditoría
+    -- Inserta en la tabla de auditor a
     INSERT INTO auditoria_clientes (
         TIPO_EVENTO, USUARIO_BD, FECHA_HORA_EVENTO, USUARIO_SO,
         IP_MAQUINA, ID_CLIENTE, USERNAME_ANTES, CONTRASENA_ANTES, NOMBRE_ANTES,
@@ -1796,7 +1864,7 @@ BEGIN
         tipo_evento := 'UPDATE';
     END IF;
 
-    -- Guarda los valores antes de la operación en variables locales
+    -- Guarda los valores antes de la operaci n en variables locales
     SELECT 
         :OLD.ID_CLIENTE,
         :OLD.USERNAME,
@@ -1817,7 +1885,7 @@ BEGIN
         c_correo
     FROM DUAL;
 
-    -- Inserta en la tabla de auditoría
+    -- Inserta en la tabla de auditor a
     INSERT INTO auditoria_clientes (
         TIPO_EVENTO, USUARIO_BD, FECHA_HORA_EVENTO, USUARIO_SO,
         IP_MAQUINA, ID_CLIENTE, USERNAME_ANTES, CONTRASENA_ANTES, NOMBRE_ANTES,
@@ -1863,7 +1931,7 @@ DECLARE
 BEGIN
     tipo_evento := 'INSERT';
 
-    -- Inserta en la tabla de auditoría
+    -- Inserta en la tabla de auditor a
     INSERT INTO auditoria_clientes (
         TIPO_EVENTO, USUARIO_BD, FECHA_HORA_EVENTO, USUARIO_SO,
         IP_MAQUINA, ID_CLIENTE, USERNAME_ANTES, CONTRASENA_ANTES, NOMBRE_ANTES,
